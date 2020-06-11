@@ -63,7 +63,7 @@ namespace EasyPKIView
 
         public static void AddSupported(string oid, string name)
         {
-            if (Supported.FirstOrDefault(p => p.OID.Matches(oid)) != null)
+            if (Supported.FirstOrDefault(p => p.OID.Matches(oid)) != null | Supported.FirstOrDefault(p => p.Name.Matches(name)) != null)
             {
                 throw new ExtendedKeyUsageAlreadyExistsException(oid, name);
             }
