@@ -113,7 +113,7 @@ namespace EasyPKIView
                 {
                     try
                     {
-                        Templates.Add(new ADCertificateTemplate(Templates[x].ToString()));
+                        Templates.Add(new ADCertificateTemplate(TemplateNames[x].ToString()));
                     }
                     catch (CertificateTemplateNotFoundException)
                     {

@@ -82,6 +82,7 @@ namespace EasyPKIView
         private static byte[] DownloadFile(string url)
         {
             byte[] responseBytes = null;
+            url = url.Replace(@" ", @"%20");
             if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 throw new FormatException($"\"{url}\": Not a valid HTTP URL");
@@ -104,6 +105,7 @@ namespace EasyPKIView
                             MemStream.Write(buf, 0, count);
                         }
                         while (ResponseStream.CanRead && count > 0);
+                        responseBytes = MemStream.ToArray();
                     }
                 }
             }
