@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EasyPKIView
 {
+    /// <summary>
+    /// Thrown if a new Extended Key Usage (EKU) is attempted to be established, but the new EKU contains a name or OID that already exists.
+    /// </summary>
     public class ExtendedKeyUsageAlreadyExistsException : Exception
     {
         internal ExtendedKeyUsageAlreadyExistsException(string oid, string name)
@@ -13,6 +16,9 @@ namespace EasyPKIView
         { }
     }
 
+    /// <summary>
+    /// Thrown if a certificate template cannot be found in Active Directory
+    /// </summary>
     public class CertificateTemplateNotFoundException : Exception
     {
         internal CertificateTemplateNotFoundException(string name)
@@ -24,6 +30,23 @@ namespace EasyPKIView
         { }
     }
 
+    /// <summary>
+    /// Thrown if a certificate template cannot be found by OID in the Active Directory
+    /// </summary>
+    public class CertificateTemplateOidNotFoundException : Exception
+    {
+        public CertificateTemplateOidNotFoundException(string oid)
+            : base($"A certificate template with Oid {oid} was not found in the current Active Directory forest. It may exist in a different Active Directory forest or have been deleted from the current forest.")
+        { }
+
+        public CertificateTemplateOidNotFoundException()
+            : base(@"The specified certificate does not contain the certificate template extension. It may not have been issued from a Microsoft Enterprise Certification Authority.")
+        { }
+    }
+
+    /// <summary>
+    /// Thrown if a Certification Authority cannot be found in the Active Directory
+    /// </summary>
     public class CertificationAuthorityNotFoundException : Exception
     {
         internal CertificationAuthorityNotFoundException(string name)

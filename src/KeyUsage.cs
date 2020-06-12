@@ -3,9 +3,19 @@ using System.Linq;
 
 namespace EasyPKIView
 {
+    /// <summary>
+    /// Describes an X509 Key Usage
+    /// </summary>
     public class KeyUsage
     {
+        /// <summary>
+        /// The name of the key usage
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// The bit that must be set in the Active Directory certificate template object in order for it to assert this key usage
+        /// </summary>
         public byte BitPosition { get; private set; }
 
         private KeyUsage(byte bitPosition, string name)
@@ -28,9 +38,12 @@ namespace EasyPKIView
         public static readonly KeyUsage CRLSigning = new KeyUsage(2, @"CRL Signing");
         public static readonly KeyUsage EncryptOnly = new KeyUsage(1, @"Encrypt Only");
 
+        /// <summary>
+        /// The list of supported Key usages
+        /// </summary>
         public static readonly List<KeyUsage> Supported = new List<KeyUsage> { DigitalSignature, NonRepudiation, KeyEncipherment, EncryptData, KeyAgreement, CertificateSigning, CRLSigning, EncryptOnly };
 
-        public static List<KeyUsage> GetKeyUsages(byte[] value)
+        internal static List<KeyUsage> GetKeyUsages(byte[] value)
         {
             return Supported.Where(p => p.IsSet(value[0])).ToList();
         }

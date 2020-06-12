@@ -4,6 +4,9 @@ using System.DirectoryServices;
 
 namespace EasyPKIView
 {
+    /// <summary>
+    /// Describes an X509 Extended Key Usage
+    /// </summary>
     public class ExtendedKeyUsage
     {
         public string OID { get; private set; }
@@ -57,10 +60,18 @@ namespace EasyPKIView
         public static readonly ExtendedKeyUsage CertificateRootListSigning = new ExtendedKeyUsage(@"1.3.6.1.4.1.311.10.3.9", @"Certificate Root List Signing");
         public static readonly ExtendedKeyUsage WHQLCryptography = new ExtendedKeyUsage(@"1.3.6.1.4.1.311.10.3.5", @"WHQL Cryptography");
 
+        /// <summary>
+        /// The list of extended key usages supported by default.
+        /// </summary>
         public static List<ExtendedKeyUsage> Supported { get; private set; } = new List<ExtendedKeyUsage> { Any, CTLAutoenrollment, DRMSigning, DSEmailReplication, EFSDataRecovery, WindowsNTEmbeddedCryptography, CertificateEnrollmentAgent, IKEIntermediate, CAExchange, CTLSigning, DocumentSigning, EFS, KeyRecovery, KeyRecoveryAgent, LifetimeSigning, QualifiedSigning, SmartcardLogon, TimestampSigning, LicenseServer, KeyPackLicenses, LegacyWindowsCryptography, OEMandWHQLCryptography, ClientAuthentication, CodeSigning, SecureEmail, IPSec, IPSecTunnel, IPSecUser, OCSPResponseSigning, ServerAuthentication, PKITimestampSigning, CertificateRootListSigning, WHQLCryptography };
 
         #endregion
 
+        /// <summary>
+        /// Allows for the addition of custom EKUs
+        /// </summary>
+        /// <param name="oid">The OID of the custom EKU to be added to the Supported collection</param>
+        /// <param name="name">The name of the custom EKU to be added to the Supported collection</param>
         public static void AddSupported(string oid, string name)
         {
             if (Supported.FirstOrDefault(p => p.OID.Matches(oid)) != null | Supported.FirstOrDefault(p => p.Name.Matches(name)) != null)

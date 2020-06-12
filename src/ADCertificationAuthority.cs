@@ -5,14 +5,40 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace EasyPKIView
 {
+    /// <summary>
+    /// Describes a Microsoft Enterprise Certification Authority as stored in the "Enrollment Services" container in Active Directory
+    /// </summary>
     public class ADCertificationAuthority : ADCSDirectoryEntry
     {
+        /// <summary>
+        /// An object containing the CA's public certificate
+        /// </summary>
         public X509Certificate2 CACertificate { get; private set; }
+
+        /// <summary>
+        /// Indicates whether this CA is an Enterprise or Standalone CA.
+        /// </summary>
         public bool IsEnterpriseCA { get; private set; }
+
+        /// <summary>
+        /// Indicates the DNS name of the server where the CA is installed.
+        /// </summary>
         public string DNSHostName { get; private set; }
+
+        /// <summary>
+        /// Indicates the Distinguished name of the CA's Certificate
+        /// </summary>
         public string CACertificateDN { get; private set; }
+
+        /// <summary>
+        /// The list of ADCertificateTemplates advertised as being available for enrollment on this CA.
+        /// </summary>
         public List<ADCertificateTemplate> Templates { get; private set; } = new List<ADCertificateTemplate>();
 
+
+        /// <summary>
+        /// Indicates whether this CA advertises any certificate templates.
+        /// </summary>
         public bool HasTemplates
         {
             get
@@ -21,6 +47,10 @@ namespace EasyPKIView
             }
         }
 
+        /// <summary>
+        /// ADCertificationAuthority Constructor 1
+        /// </summary>
+        /// <param name="name">The common name of the CA</param>
         public ADCertificationAuthority(string name)
             : base(LdapUrls.EnrollmentService(name), ObjectClass.PKIEnrollmentService)
         {
@@ -31,6 +61,10 @@ namespace EasyPKIView
             SetFieldsFromDirectoryObject();
         }
 
+        /// <summary>
+        /// ADCertificationAuthority Constructor 2
+        /// </summary>
+        /// <param name="CAEntry">The Active Directory entry pointing to this CA Enrollment Services object</param>
         public ADCertificationAuthority(DirectoryEntry CAEntry)
             : base(CAEntry, ObjectClass.PKIEnrollmentService)
         {
@@ -41,6 +75,10 @@ namespace EasyPKIView
             SetFieldsFromDirectoryObject();
         }
 
+        /// <summary>
+        /// ADCertificationAuthority Constructor 3
+        /// </summary>
+        /// <param name="CACert">The CA's public certificate</param>
         public ADCertificationAuthority(X509Certificate2 CACert)
             : this(CACert.Subject.Replace(@"CN=", string.Empty).Split(',')[0])
         { }
@@ -85,6 +123,10 @@ namespace EasyPKIView
             }
         }
 
+        /// <summary>
+        /// Loads all CAs in the current Active Directory forest
+        /// </summary>
+        /// <returns>A list of ADCertificationAuthority objects</returns>
         public static List<ADCertificationAuthority> GetAll()
         {
             List<ADCertificationAuthority> Collection = new List<ADCertificationAuthority>();

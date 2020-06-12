@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/MikeBrunoCISSP/EasyPKIView</projectUrl>
+    <iconUrl>http://x509crypto.org/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Intial release</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>certificate authority pki adcs active directory template</tags>
+	<dependencies>
+      <dependency id="BouncyCastle" version="1.8.6.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\bin\EasyPKIView.dll" />
+  </files>
+</package>

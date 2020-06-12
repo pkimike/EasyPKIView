@@ -30,6 +30,7 @@
 
     internal static class Constants
     {
-        internal static string UnrecognizedExtension = @"Unrecognized Extension";
+        internal const string UnrecognizedExtension = @"Unrecognized Extension";
+        internal const string CertificateTemplateExtensionOid = @"1.3.6.1.4.1.311.21.7";
     }
 }
