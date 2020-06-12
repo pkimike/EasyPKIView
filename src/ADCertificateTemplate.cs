@@ -87,7 +87,7 @@ namespace EasyPKIView
                 if (Extension.Oid.Value.Matches(Constants.CertificateTemplateExtensionOid))
                 {
                     templateOid = GetTemplateOidFromCertExtension(Extension);
-                    FoundTemplate = LoadAll().Where(p => p.Version > 1)
+                    FoundTemplate = GetAll().Where(p => p.Version > 1)
                                              .FirstOrDefault(p => p.Oid.Matches(templateOid));
 
                     if (FoundTemplate == null)
@@ -116,17 +116,17 @@ namespace EasyPKIView
         /// </summary>
         /// <param name="refreshIfCached">If true, list will be generated from AD even if there is already a cached list. Default is false</param>
         /// <returns>A list of ADCertificateTemplate objects</returns>
-        public static List<ADCertificateTemplate> LoadAll(bool refreshIfCached = false)
+        public static List<ADCertificateTemplate> GetAll(bool refreshIfCached = false)
         {
             if (!loadedAllTemplates | refreshIfCached)
             {
-                LoadAllWorker();
+                GetAllWorker();
             }
 
             return all;
         }
 
-        private static void LoadAllWorker()
+        private static void GetAllWorker()
         {
             all = new List<ADCertificateTemplate>();
             ADCertificateTemplate Template;

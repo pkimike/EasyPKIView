@@ -43,7 +43,7 @@ Obtaining information about the certificate templates in your AD forest programm
 To simply generate a list of all certificate templates in your AD forest:
 
 ```
-var MyTemplates = ADCertificateTemplate.LoadAll();
+var MyTemplates = ADCertificateTemplate.GetAll();
 ```
 
 Each ADCertificateTemplate object will contain metadata about a certificate template, including:
@@ -60,7 +60,7 @@ Let's say you're asked to identify any certificate templates that allow for weak
 ```
 using System.Linq;
 
-var WeakTemplates = ADCertificateTemplate.LoadAll()
+var WeakTemplates = ADCertificateTemplate.GetAll()
                                          .Where(p => p.MinimumKeySize < 2048)
 					 .ToList();
 ```
