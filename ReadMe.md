@@ -70,7 +70,7 @@ You can narrow your work down further by only focusing on certificate templates 
 ```
 var WeakTemplates = ADCertificationAuthority.GetAll()
 					    .Select(p => p.Templates)
-					    .SelectMany(p => p) //flattens the collection
+					    .SelectMany(p => p)
 					    .Where(p => p.MinimumKeySize < 2048)
 					    .Distinct().ToList();
 ```
