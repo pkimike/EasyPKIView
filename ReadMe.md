@@ -12,6 +12,8 @@ EasyPKIView provides a simple interface for inspecting components of your Micros
 Let's say you want to generate a list of all the Enterprise CAs in your environment:
 
 ```
+using EasyPKIView;
+
 List<ADCertificationAuthority> MyCAs = ADCertificationAuthority.GetAll();
 ```
 The *MyCAs* object will contain just about all the metadata you may need about every Issuing CA including:
@@ -59,6 +61,7 @@ Let's say you're asked to identify any certificate templates that allow for weak
 
 ```
 using System.Linq;
+using EasyPKIView;
 
 var WeakTemplates = ADCertificateTemplate.GetAll()
                                          .Where(p => p.MinimumKeySize < 2048)
@@ -88,6 +91,7 @@ You can use the **CrlReader** class to inspect a CRL by passing it in as an alre
 
 ```
 using System.IO;
+using EasyPKIView;
 
 var MyCRL = new CrlReader(new FileInfo(@"c:\Vandelay.crl"));
 ```
