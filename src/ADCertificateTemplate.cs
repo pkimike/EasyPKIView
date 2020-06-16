@@ -109,6 +109,7 @@ namespace EasyPKIView
             KeyUsages = KeyUsage.GetKeyUsages((byte[])DirEntry.Properties[PropertyIndex.KeyUsage].Value);
             RASignaturesRequired = (int)DirEntry.Properties[PropertyIndex.RASignaturesRequired].Value;
             MinimumKeySize = (int)DirEntry.Properties[PropertyIndex.MinimumKeySize].Value;
+            Oid = DirEntry.Properties[PropertyIndex.OID].Value.ToString();
         }
 
         /// <summary>
