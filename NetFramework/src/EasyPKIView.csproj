@@ -1,6 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!-- <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net462;netcoreapp3.0</TargetFrameworks>
+    <files>
+      <file src="bin\Release\net462\EasyPKIView.dll" target="lib\net462\EasyPKIView.dll" />
+      <file src="bin\Release\netstandard2.0\EasyPKIView.dll" target="lib\netstandard2.0\EasyPKIView.dll" />
+      <file src="bin\Release\netcoreapp2.2\EasyPKIView.dll" target="lib\netcoreapp2.2\EasyPKIView.dll" />
+      <file src="..\LICENSE" target="\" />
+      <file src="..\images\logo_small.png" target="\" />
+    </files>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>EasyPKIView</PackageId>
+    <Description>Simplifies enumerating and correlating PKI-related Active Directory objects</Description>
+    <Version>1.1.0.0</Version>
+    <Authors>Mike Bruno</Authors>
+    <Company>X509Crypto.org</Company>
+    <RepositoryUrl></RepositoryUrl>
+    <PackageTags>certificate authority pki adcs active directory template</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageReleaseNotes>
+      Added support for .NET Core and .NET Stanard
+    </PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/MikeBrunoCISSP/EasyPKIView</PackageProjectUrl>
+  </PropertyGroup> -->
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -63,7 +87,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
-    <PropertyGroup>
+     <PropertyGroup>
       <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
