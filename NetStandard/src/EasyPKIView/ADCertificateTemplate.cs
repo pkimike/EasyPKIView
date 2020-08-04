@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 
 namespace EasyPKIView
 {
@@ -13,7 +14,7 @@ namespace EasyPKIView
     public class ADCertificateTemplate : ADCSDirectoryEntry
     {
         private static bool loadedAllTemplates = false;
-        private static List<ADCertificateTemplate> all;
+        private static List<ADCertificateTemplate> all = new List<ADCertificateTemplate>();
 
         /// <summary>
         /// The object ID of the certificate template
@@ -44,6 +45,76 @@ namespace EasyPKIView
         /// The minimum key size of the public key enforced by this certificate template
         /// </summary>
         public int MinimumKeySize { get; private set; }
+
+        /// <summary>
+        /// The amount of time for which certificates issued from this template are valid
+        /// </summary>
+        public TimeSpan ValidityPeriod { get; private set; }
+
+        /// <summary>
+        /// A set of bit switches that control additonal certificate template behaviors
+        /// </summary>
+        public int PrivateKeyFlags { get; private set; }
+
+        /// <summary>
+        /// Indicates whether this certificate template requires private key archival
+        /// </summary>
+        public bool RequiresPrivateKeyArchival => (PrivateKeyFlags & CertificateTemplateFlag.RequirePrivateKeyArchival) != 0;
+
+        /// <summary>
+        /// Indicates whether the private key associated with certificates issued from this template should be exportable from the host on which they were created (only meaningful on Windows clients)
+        /// </summary>
+        public bool ExportablePrivateKey => (PrivateKeyFlags & CertificateTemplateFlag.ExportablePrivateKey) != 0;
+
+        /// <summary>
+        /// Indicates whether this certificate template should enforce strong private key protection.  See https://tinyurl.com/y25l2h8p for more details.
+        /// </summary>
+        public bool RequiresStrongKeyProtection => (PrivateKeyFlags & CertificateTemplateFlag.StrongKeyProtectionRequired) != 0;
+
+        /// <summary>
+        /// Indicates whether this certificate template should require TPM Key Attestation. See https://tinyurl.com/y9c6oxnp for more details.
+        /// </summary>
+        public bool KeyAttestationRequired => (PrivateKeyFlags & CertificateTemplateFlag.KeyAttestationRequired) != 0;
+
+        /// <summary>
+        /// Indicates whether this certificate template should use TPM Key Attestation if the client supports it.
+        /// </summary>
+        public bool KeyAttestationPreferred => (PrivateKeyFlags & CertificateTemplateFlag.KeyAttestationPreferred) != 0;
+
+        /// <summary>
+        /// Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
+        /// </summary>
+        public bool AssertsKeyAttestationPolicy => KeyAttestationPreferred && (PrivateKeyFlags & CertificateTemplateFlag.AllowKeyAttestationWithoutPolicyAssertion) == 0;
+
+        internal KeyAttestationType attestationType
+        {
+            get
+            {
+                if ((PrivateKeyFlags & (int)KeyAttestationType.AccountCredentials) != 0)
+                {
+                    return KeyAttestationType.AccountCredentials;
+                }
+
+                if ((PrivateKeyFlags & (int)KeyAttestationType.SigningCertificate) != 0)
+                {
+                    return KeyAttestationType.SigningCertificate;
+                }
+
+                if ((PrivateKeyFlags & (int)KeyAttestationType.PreSharedKey) != 0)
+                {
+                    return KeyAttestationType.PreSharedKey;
+                }
+                else
+                {
+                    return KeyAttestationType.None;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Indicates the TPM Key Attestation type required by this certificate template (if applicable)
+        /// </summary>
+        public string AttestationType => attestationType.GetDescription();
 
         /// <summary>
         /// ADCertificateTemplate Constructor 1

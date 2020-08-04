@@ -1,5 +1,23 @@
-﻿namespace EasyPKIView
+﻿using System.ComponentModel;
+
+namespace EasyPKIView
 {
+    public enum KeyAttestationType
+    {
+
+        [Description(@"None")]
+        None = 0x0,
+
+        [Description(@"Account Credentials")]
+        AccountCredentials = 0x200,
+
+        [Description(@"Manufacturer Signing Certificate")]
+        SigningCertificate = 0x400,
+
+        [Description(@"Manufacturer Pre-Shared Key")]
+        PreSharedKey = 0x800
+    }
+
     internal static class PropertyIndex
     {
         internal const string OID = @"msPKI-Cert-Template-OID";
@@ -20,6 +38,8 @@
         internal const string DNSHostName = @"dNSHostName";
         internal const string CACertificateDN = @"cACertificateDN";
         internal const string CertificateTemplates = @"certificateTemplates";
+        internal const string ValidityPeriod = @"pKIExpirationPeriod";
+        internal const string PrivateKeyFlags = @"msPKI-Private-Key-Flag";
     }
 
     internal static class ObjectClass
@@ -39,14 +59,6 @@
         internal const int KeyAttestationRequired = 0x2000;
         internal const int KeyAttestationPreferred = 0x1000;
         internal const int AllowKeyAttestationWithoutPolicyAssertion = 0x4000;
-    }
-
-    internal static class KeyAttestationType
-    {
-        internal const int NotRequired = 0x0;
-        internal const int AccountCredentials = 0x200;
-        internal const int TrustedManufacturerCertificate = 0x400;
-        internal const int TrustedManufacturerKey = 0x800;
     }
 
     internal static class Constants
