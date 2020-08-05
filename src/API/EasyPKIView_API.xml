@@ -1,0 +1,584 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyPKIView_API</name>
+    </assembly>
+    <members>
+        <member name="T:EasyPKIView.ADCertificateTemplate">
+            <summary>
+            Describes a certificate template as stored in the "Certificate Templates" container in Active Directory
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.Oid">
+            <summary>
+            The object ID of the certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.Version">
+            <summary>
+            The certificate template version. Version 1 = Compatible with Windows 2000 and up, Version 2 = WS2003 and up, and so on.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.KeyUsages">
+            <summary>
+            The list of key usages asserted by certificates issued using this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.ExtendedKeyUsages">
+            <summary>
+            The list of extended key usages (also known as application policies) asserted by certificates issued using this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.RASignaturesRequired">
+            <summary>
+            The number of certificate request agents a certificate request must be signed by in order to obtain a certificate using this template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.MinimumKeySize">
+            <summary>
+            The minimum key size of the public key enforced by this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.ValidityPeriod">
+            <summary>
+            The amount of time for which certificates issued from this template are valid
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.PrivateKeyFlags">
+            <summary>
+            A set of bit switches that control additonal certificate template behaviors
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.RequiresPrivateKeyArchival">
+            <summary>
+            Indicates whether this certificate template requires private key archival
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.ExportablePrivateKey">
+            <summary>
+            Indicates whether the private key associated with certificates issued from this template should be exportable from the host on which they were created (only meaningful on Windows clients)
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.RequiresStrongKeyProtection">
+            <summary>
+            Indicates whether this certificate template should enforce strong private key protection.  See https://tinyurl.com/y25l2h8p for more details.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.KeyAttestationRequired">
+            <summary>
+            Indicates whether this certificate template should require TPM Key Attestation. See https://tinyurl.com/y9c6oxnp for more details.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.KeyAttestationPreferred">
+            <summary>
+            Indicates whether this certificate template should use TPM Key Attestation if the client supports it.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.AssertsKeyAttestationPolicy">
+            <summary>
+            Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.AttestationType">
+            <summary>
+            Indicates the TPM Key Attestation type required by this certificate template (if applicable)
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.ADCertificateTemplate.#ctor(System.String)">
+            <summary>
+            ADCertificateTemplate Constructor 1
+            </summary>
+            <param name="name">The Name attribute of the certificate template as indicated in Active Directory</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificateTemplate.#ctor(System.DirectoryServices.DirectoryEntry)">
+            <summary>
+            ADCertificateTemplate Constructor 2
+            </summary>
+            <param name="TemplateEntry">The Active Directory entry pointing to this certificate template</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificateTemplate.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            ADCertificateTemplate Constructor 3
+            </summary>
+            <param name="Cert">A certificate object which was issued using the desired certificate template</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificateTemplate.GetAll(System.Boolean)">
+            <summary>
+            Loads all certificate templates contained in the Active Directory forest
+            </summary>
+            <param name="refreshIfCached">If true, list will be generated from AD even if there is already a cached list. Default is false</param>
+            <returns>A list of ADCertificateTemplate objects</returns>
+        </member>
+        <member name="T:EasyPKIView.ADCertificationAuthority">
+            <summary>
+            Describes a Microsoft Enterprise Certification Authority as stored in the "Enrollment Services" container in Active Directory
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.CACertificate">
+            <summary>
+            An object containing the CA's public certificate
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.IsEnterpriseCA">
+            <summary>
+            Indicates whether this CA is an Enterprise or Standalone CA.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.DNSHostName">
+            <summary>
+            Indicates the DNS name of the server where the CA is installed.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.CACertificateDN">
+            <summary>
+            Indicates the Distinguished name of the CA's Certificate
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.Templates">
+            <summary>
+            The list of ADCertificateTemplates advertised as being available for enrollment on this CA.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificationAuthority.HasTemplates">
+            <summary>
+            Indicates whether this CA advertises any certificate templates.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.ADCertificationAuthority.#ctor(System.String)">
+            <summary>
+            ADCertificationAuthority Constructor 1
+            </summary>
+            <param name="name">The common name of the CA</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificationAuthority.#ctor(System.DirectoryServices.DirectoryEntry)">
+            <summary>
+            ADCertificationAuthority Constructor 2
+            </summary>
+            <param name="CAEntry">The Active Directory entry pointing to this CA Enrollment Services object</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificationAuthority.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            ADCertificationAuthority Constructor 3
+            </summary>
+            <param name="CACert">The CA's public certificate</param>
+        </member>
+        <member name="M:EasyPKIView.ADCertificationAuthority.GetAll">
+            <summary>
+            Loads all CAs in the current Active Directory forest
+            </summary>
+            <returns>A list of ADCertificationAuthority objects</returns>
+        </member>
+        <member name="T:EasyPKIView.ADCSDirectoryEntry">
+            <summary>
+            Describes an entry in the Public Key Services container of Active Directory
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.Name">
+            <summary>
+            The Name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.DisplayName">
+            <summary>
+            The Display name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.DistinguishedName">
+            <summary>
+            The Distinguished Name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.WhenCreated">
+            <summary>
+            Indicates when the directory entry was created
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.WhenChanged">
+            <summary>
+            Indicates when the directory entry was last modified
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCSDirectoryEntry.ObjectGuid">
+            <summary>
+            The GUID of the directory entry
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.ADCSDirectoryEntry.#ctor">
+            <summary>
+            ADCSDirectoryEntry default constructor (do not use)
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.ADCSDirectoryEntry.#ctor(System.DirectoryServices.DirectoryEntry,System.String)">
+            <summary>
+            ADCSDirectoryEntry Constructor 1
+            </summary>
+            <param name="Entry">Directory Entry pointing to the desired directory object</param>
+            <param name="expectedObjectClass">Indicates the expected object class for the directory entry (either a certificate template or a CA)</param>
+        </member>
+        <member name="M:EasyPKIView.ADCSDirectoryEntry.#ctor(System.String,System.String)">
+            <summary>
+            ADCSDirectoryEntry Constructor 2
+            </summary>
+            <param name="ldapURL">The fully-qualified LDAP URL to the desired object</param>
+            <param name="expectedObjectClass">Indicates the expected object class for the directory entry (either a certificate template or a CA)</param>
+        </member>
+        <member name="T:EasyPKIView.KeyAttestationType">
+            <summary>
+            Key Attestation Type Enumeration.  
+            See https://tinyurl.com/y9c6oxnp for more information
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyAttestationType.None">
+            <summary>
+            None. Key Attestation not supported by this certificate template
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyAttestationType.AccountCredentials">
+            <summary>
+            An authenticating user is allowed to vouch for a valid TPM by specifying their domain credentials.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyAttestationType.SigningCertificate">
+            <summary>
+            The EKCert of the device must validate through administrator-managed TPM intermediate CA certificates to an administrator-managed root CA certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyAttestationType.PreSharedKey">
+            <summary>
+            The EKPub of the device must appear in the PKI administrator-managed list.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CrlReader">
+            <summary>
+            Describes an X509 Certificate Revocation List (CRL). Includes the most relevant fields
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CrlReader.NextUpdate">
+            <summary>
+            The expiration date of this CRL (when it can no longer be used to validate certificates)
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CrlReader.Certificates">
+            <summary>
+            The list of certificate serial numbers that are indicated as revoked by the CRL.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CrlReader.#ctor(System.Byte[])">
+            <summary>
+            CrlReader Constructor 1
+            </summary>
+            <param name="crlBytes">byte array containing the CRL contents</param>
+        </member>
+        <member name="M:EasyPKIView.CrlReader.#ctor(System.IO.FileInfo)">
+            <summary>
+            CrlReader Constructor 2
+            </summary>
+            <param name="crlFile">FileInfo object pointing to a CRL file</param>
+        </member>
+        <member name="M:EasyPKIView.CrlReader.#ctor(System.String)">
+            <summary>
+            CrlReader Constructor 3
+            </summary>
+            <param name="CrlUrl">The HTTP URL from which to download the CRL</param>
+        </member>
+        <member name="M:EasyPKIView.CrlReader.IsCertRevoked(System.String)">
+            <summary>
+            Indicates whether the certificate with the specified serial number is revoked per the CRL
+            </summary>
+            <param name="serialNumber">Serial number of the certificate to be checked.</param>
+            <returns>true or false depending on whether the certificate is revoked.</returns>
+        </member>
+        <member name="M:EasyPKIView.CrlReader.IsCertRevoked(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Indicates whether the specified certificate is revoked per the CRL
+            </summary>
+            <param name="Cert">Certificate to be checked.</param>
+            <returns>true or false depending on whether the certificate is revoked.</returns>
+        </member>
+        <member name="T:EasyPKIView.ExtendedKeyUsageAlreadyExistsException">
+            <summary>
+            Thrown if a new Extended Key Usage (EKU) is attempted to be established, but the new EKU contains a name or OID that already exists.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateNotFoundException">
+            <summary>
+            Thrown if a certificate template cannot be found in Active Directory
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateOidNotFoundException">
+            <summary>
+            Thrown if a certificate template cannot be found by OID in the Active Directory
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateOidNotFoundException.#ctor(System.String)">
+            <summary>
+            CertificateTemplateOidNotFoundException Constructor 1
+            </summary>
+            <param name="oid"></param>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateOidNotFoundException.#ctor">
+            <summary>
+            CertificateTemplateOidNotFoundException Constructor 2
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificationAuthorityNotFoundException">
+            <summary>
+            Thrown if a Certification Authority cannot be found in the Active Directory
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.ExtendedKeyUsage">
+            <summary>
+            Describes an X509 Extended Key Usage.
+            See https://tinyurl.com/y34dpt24 for more details
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ExtendedKeyUsage.OID">
+            <summary>
+            The OID (Object Identifier) of the EKU
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ExtendedKeyUsage.Name">
+            <summary>
+            The name of the EKU
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.Any">
+            <summary>
+            Any - Certificate contains no EKUs and is unrestricted.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CTLAutoenrollment">
+            <summary>
+            The certificate can be used to sign a request for automatic enrollment in a certificate trust list (CTL). 
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.DRMSigning">
+            <summary>
+            The certificate can be used for digital rights management applications.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.DSEmailReplication">
+            <summary>
+            The certificate can be used for Directory Service email replication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.EFSDataRecovery">
+            <summary>
+            The certificate can be used for recovery of documents protected by using Encrypting File System (EFS).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.WindowsNTEmbeddedCryptography">
+            <summary>
+            The certificate can be used for Windows NT Embedded cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CertificateEnrollmentAgent">
+            <summary>
+            The certificate can be used by an enrollment agent.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.IKEIntermediate">
+            <summary>
+            The certificate can be used for Internet Key Exchange (IKE).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CAExchange">
+            <summary>
+            	The certificate can be used for archiving a private key on a certification authority.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CTLSigning">
+            <summary>
+            The certificate can be used to sign a Certificate Trust List (CTL).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.DocumentSigning">
+            <summary>
+            The certificate can be used for signing documents.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.EFS">
+            <summary>
+            The certificate can be used to encrypt files by using the Encrypting File System (EFS).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.KeyRecovery">
+            <summary>
+            	The certificate can be used to encrypt and recover escrowed keys.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.KeyRecoveryAgent">
+            <summary>
+            The certificate is used to identify a key recovery agent.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.LifetimeSigning">
+            <summary>
+            Limits the validity period of a signature to the validity period of the certificate. This restriction is typically used with the XCN_OID_PKIX_KP_CODE_SIGNING OID value to indicate that new time stamp semantics should be used.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.QualifiedSigning">
+            <summary>
+            The certificate can be used to sign cross certificate and subordinate certification authority certificate requests. Qualified subordination is implemented by applying basic constraints, certificate policies, and application policies. Cross certification typically requires policy mapping.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.SmartcardLogon">
+            <summary>
+            The certificate enables an individual to log on to a computer by using a smart card.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.TimestampSigning">
+            <summary>
+            The certificate can be used to sign a time stamp to be added to a document. Time stamp signing is typically part of a time stamping service.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.LicenseServer">
+            <summary>
+            The certificate can be used by a license server when transacting with Microsoft to receive licenses for Terminal Services clients
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.KeyPackLicenses">
+            <summary>
+            The certificate can be used for key pack licenses.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.LegacyWindowsCryptography">
+            <summary>
+            The certificate can be used for Windows Server 2003, Windows XP, and Windows 2000 cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.OEMandWHQLCryptography">
+            <summary>
+            The certificate can be used for used for Original Equipment Manufacturers (OEM) Windows Hardware Quality Labs (WHQL) cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.ClientAuthentication">
+            <summary>
+            The certificate can be used for authenticating a client.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CodeSigning">
+            <summary>
+            The certificate can be used for signing code.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.SecureEmail">
+            <summary>
+            The certificate can be used to encrypt email messages.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.IPSec">
+            <summary>
+            The certificate can be used for signing end-to-end Internet Protocol Security (IPSEC) communication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.IPSecTunnel">
+            <summary>
+            The certificate can be used for singing IPSEC communication in tunnel mode.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.IPSecUser">
+            <summary>
+            The certificate can be used for an IPSEC user.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.OCSPResponseSigning">
+            <summary>
+            The certificate can be used for Online Certificate Status Protocol (OCSP) signing.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.ServerAuthentication">
+            <summary>
+            The certificate can be used for server authentication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.PKITimestampSigning">
+            <summary>
+            The certificate can be used for signing public key infrastructure timestamps.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.CertificateRootListSigning">
+            <summary>
+            The certificate can be used sign a certificate root list.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.ExtendedKeyUsage.WHQLCryptography">
+            <summary>
+            The certificate can be used for Windows Hardware Quality Labs (WHQL) cryptography.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ExtendedKeyUsage.Supported">
+            <summary>
+            The list of extended key usages supported by default.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.ExtendedKeyUsage.AddSupported(System.String,System.String)">
+            <summary>
+            Allows for the addition of custom EKUs
+            </summary>
+            <param name="oid">The OID of the custom EKU to be added to the Supported collection</param>
+            <param name="name">The name of the custom EKU to be added to the Supported collection</param>
+        </member>
+        <member name="T:EasyPKIView.KeyUsage">
+            <summary>
+            Describes an X509 Key Usage.  
+            See https://tinyurl.com/nr47gkg for more information
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.KeyUsage.Name">
+            <summary>
+            The name of the key usage
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.KeyUsage.BitPosition">
+            <summary>
+            The bit that must be set in the Active Directory certificate template object in order for it to assert this key usage
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.DigitalSignature">
+            <summary>
+            Digital Signature
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.NonRepudiation">
+            <summary>
+            Non-repudiation - Digital signature asserts Proof of origin
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.KeyEncipherment">
+            <summary>
+            Key Encipherment - public key may be used to encrypt symmetric keys but not data
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.EncryptData">
+            <summary>
+            Data Encipherment - public key may be used to directly encrypt data
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.KeyAgreement">
+            <summary>
+            Key Agreement - private key may be used verify a signature on certificates. This extension can be used only in CA certificates.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.CertificateSigning">
+            <summary>
+            Certificate Signing - private key may be used to sign other certificates. This extension can be used only in CA certificates.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.CRLSigning">
+            <summary>
+            CRL Signing - private key may be used to sign Certificate Revocation Lists (CRLs). This extension can be used only in CA certificates.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.EncryptOnly">
+            <summary>
+            Encrypt Only - Unclear on what this key usage asserts. Not typically used.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.KeyUsage.Supported">
+            <summary>
+            The list of supported Key usages
+            </summary>
+        </member>
+    </members>
+</doc>

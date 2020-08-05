@@ -2,7 +2,7 @@
 
 namespace EasyPKIView
 {
-    public class LdapUrls
+    internal class LdapUrls
     {
         private static string dc = string.Empty;
         private static bool dcSet = false;

@@ -35,10 +35,17 @@ namespace EasyPKIView
     /// </summary>
     public class CertificateTemplateOidNotFoundException : Exception
     {
+        /// <summary>
+        /// CertificateTemplateOidNotFoundException Constructor 1
+        /// </summary>
+        /// <param name="oid"></param>
         public CertificateTemplateOidNotFoundException(string oid)
             : base($"A certificate template with Oid {oid} was not found in the current Active Directory forest. It may exist in a different Active Directory forest or have been deleted from the current forest.")
         { }
 
+        /// <summary>
+        /// CertificateTemplateOidNotFoundException Constructor 2
+        /// </summary>
         public CertificateTemplateOidNotFoundException()
             : base(@"The specified certificate does not contain the certificate template extension. It may not have been issued from a Microsoft Enterprise Certification Authority.")
         { }
