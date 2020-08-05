@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -47,6 +48,20 @@ namespace EasyPKIView
                 }
             }
             return string.Empty;
+        }
+
+        internal static TimeSpan ToTimeSpan(this byte[] value)
+        {
+            long period = BitConverter.ToInt64(value, 0);
+            period /= -10000000; 
+            return TimeSpan.FromSeconds(period);
+        }
+
+        internal static byte[] ToByteArray(this TimeSpan value)
+        {
+            double period = value.TotalSeconds;
+            period *= -10000000;
+            return BitConverter.GetBytes((long)period);
         }
     }
 }
