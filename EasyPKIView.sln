@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPKIView", "src\EasyPKIView.csproj", "{9CF9D431-6961-4CA4-B2F4-0C8DFDAB2ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyPKIView_API", "src\API\EasyPKIView_API.csproj", "{74E18DB2-C1DE-4EFA-8C38-AA19A7A59034}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample_ADCertificateTemplate", "src\Samples\ADCertificateTemplate\Sample_ADCertificateTemplate.csproj", "{47D7D6C7-E35C-4872-98F0-1573C9AA4F5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample_ADCertificationAuthority", "src\Samples\ADCertificationAuthority\Sample_ADCertificationAuthority.csproj", "{BEA355A8-06DF-48C8-B577-5D3C10D500BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample_CRLReader", "src\Samples\CRLReader\Sample_CRLReader.csproj", "{B4EF93D0-7677-4BAA-835B-4B4A700F969F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +17,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9CF9D431-6961-4CA4-B2F4-0C8DFDAB2ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CF9D431-6961-4CA4-B2F4-0C8DFDAB2ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CF9D431-6961-4CA4-B2F4-0C8DFDAB2ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CF9D431-6961-4CA4-B2F4-0C8DFDAB2ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E18DB2-C1DE-4EFA-8C38-AA19A7A59034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E18DB2-C1DE-4EFA-8C38-AA19A7A59034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E18DB2-C1DE-4EFA-8C38-AA19A7A59034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E18DB2-C1DE-4EFA-8C38-AA19A7A59034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D7D6C7-E35C-4872-98F0-1573C9AA4F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D7D6C7-E35C-4872-98F0-1573C9AA4F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D7D6C7-E35C-4872-98F0-1573C9AA4F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D7D6C7-E35C-4872-98F0-1573C9AA4F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA355A8-06DF-48C8-B577-5D3C10D500BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA355A8-06DF-48C8-B577-5D3C10D500BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA355A8-06DF-48C8-B577-5D3C10D500BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA355A8-06DF-48C8-B577-5D3C10D500BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4EF93D0-7677-4BAA-835B-4B4A700F969F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4EF93D0-7677-4BAA-835B-4B4A700F969F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4EF93D0-7677-4BAA-835B-4B4A700F969F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4EF93D0-7677-4BAA-835B-4B4A700F969F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {04B9F2F7-4B75-405F-AB86-42C6CBD793E9}
+		SolutionGuid = {5E048ED0-52D9-4BA0-91B6-07E726F0611E}
 	EndGlobalSection
 EndGlobal
