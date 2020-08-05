@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\API\EasyPKIView.csproj" />
+    <ProjectReference Include="..\..\API\EasyPKIView_API.csproj" />
   </ItemGroup>
 
 </Project>
