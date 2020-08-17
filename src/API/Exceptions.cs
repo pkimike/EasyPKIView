@@ -52,6 +52,22 @@ namespace EasyPKIView
     }
 
     /// <summary>
+    /// Thrown if the access rules for a certificate template cannot be successfully retrieved from AD.
+    /// </summary>
+    public class CertificateTemplateAccessRuleException : Exception
+    {
+        /// <summary>
+        /// CertificateTemplateAccessRuleException constructor
+        /// </summary>
+        /// <param name="Template">An ADCertificateTemplate object</param>
+        /// <param name="ex">The exception that occured while doing the Access Rule check</param>
+        public CertificateTemplateAccessRuleException(ADCertificateTemplate Template, Exception ex)
+            : base($"An exception was encountered retrieving the access rules for certificate template {Template.Name} (OID: {Template.Oid})", ex)
+        { }
+    }
+        
+
+    /// <summary>
     /// Thrown if a Certification Authority cannot be found in the Active Directory
     /// </summary>
     public class CertificationAuthorityNotFoundException : Exception

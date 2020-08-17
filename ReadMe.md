@@ -78,6 +78,26 @@ var WeakTemplates = ADCertificationAuthority.GetAll()
 					    .Distinct().ToList();
 ```
 
+New for version 1.0.6 is the ability to see the effective Active Directory permissions on a certificate template object. Certificate template permissions are stored as a collection of ADCertificateTemplateAccessRule objects. Each element in the collection represents an AD principal along with its effective permissions on the template.
+
+In the below example, we will iterate through each AD principal that has one or more permissions set on the certificate template, displaying the principal display name & whether it has each permission type:
+
+```
+var AdminTemplate = new ADCertificateTemplate(@"Administrator");
+foreach(ADCertificateTemplateAccessRule Rule in AdminTemplate.AccessRules)
+{
+	Console.WriteLine($"Principal Name: {Rule.Identity}");
+	Console.WriteLine($"Has Read Access?: {Rule.Read}");
+	Console.WriteLine($"Has Write Access?: {Rule.Write}");
+	Console.WriteLine($"Has Full Control?: {Rule.FullControl}");
+	Console.WriteLine($"Has Enroll Access?: {Rule.Enroll}");
+	Console.WriteLine($"Has Autoenroll Access?: {Rule.Autoenroll}");
+
+	Console.WriteLine("\r\n----\r\n");
+}
+
+```
+
 ## Working with Certificate Revocation Lists (CRLs)
 
 EasyPKIView leverages the excellent BouncyCastle library to enable you to pull up the most pertinent information about an indicated CRL. In the current version of the library, this includes:

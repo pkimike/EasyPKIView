@@ -81,4 +81,10 @@ namespace EasyPKIView
         internal const string UnrecognizedExtension = @"Unrecognized Extension";
         internal const string CertificateTemplateExtensionOid = @"1.3.6.1.4.1.311.21.7";
     }
+
+    internal static class ExtendedRightGuid
+    {
+        internal const string Enroll = "0e10c968-78fb-11d2-90d4-00c04f79dc55";
+        internal const string AutoEnroll = "a05b8cc2-17bc-4802-a710-e7c15ab866a2";
+    }
 }

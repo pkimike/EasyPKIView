@@ -79,6 +79,11 @@
             Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
             </summary>
         </member>
+        <member name="P:EasyPKIView.ADCertificateTemplate.AccessRules">
+            <summary>
+            The collection of AD identity principals that have rights on the certificate template along with the specification of what those rights are
+            </summary>
+        </member>
         <member name="P:EasyPKIView.ADCertificateTemplate.AttestationType">
             <summary>
             Indicates the TPM Key Attestation type required by this certificate template (if applicable)
@@ -320,6 +325,18 @@
             <summary>
             CertificateTemplateOidNotFoundException Constructor 2
             </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateAccessRuleException">
+            <summary>
+            Thrown if the access rules for a certificate template cannot be successfully retrieved from AD.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateAccessRuleException.#ctor(EasyPKIView.ADCertificateTemplate,System.Exception)">
+            <summary>
+            CertificateTemplateAccessRuleException constructor
+            </summary>
+            <param name="Template">An ADCertificateTemplate object</param>
+            <param name="ex">The exception that occured while doing the Access Rule check</param>
         </member>
         <member name="T:EasyPKIView.CertificationAuthorityNotFoundException">
             <summary>
@@ -578,6 +595,41 @@
         <member name="F:EasyPKIView.KeyUsage.Supported">
             <summary>
             The list of supported Key usages
+            </summary>
+        </member>
+        <member name="T:EasyPKIView_API.ADCertificateTemplateAccessRule">
+            <summary>
+            Describes an Active Directory identity along with its access rights to the associated certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Identity">
+            <summary>
+            The name of the Active Directory principal (a user, group or device)
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.FullControl">
+            <summary>
+            If <strong>True</strong> the principal has complete control over the Certificate Template; it can read, modify or delete it.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Read">
+            <summary>
+            If <strong>True</strong> the principal has access to read the certificate template object
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Write">
+            <summary>
+            If <strong>True</strong> the principal has access to write to the certificate template object.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Enroll">
+            <summary>
+            If <strong>True</strong> the principal has access to manually enroll against the certificate template object
+            </summary>
+        </member>
+        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.AutoEnroll">
+            <summary>
+            If <strong>True</strong> the principal has access to automatically enroll against the certificate template object
             </summary>
         </member>
     </members>

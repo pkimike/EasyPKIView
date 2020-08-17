@@ -5,6 +5,8 @@ using System.DirectoryServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
+using EasyPKIView_API;
+using System.Security.Principal;
 
 namespace EasyPKIView
 {
@@ -85,6 +87,11 @@ namespace EasyPKIView
         /// Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
         /// </summary>
         public bool AssertsKeyAttestationPolicy => KeyAttestationPreferred && (PrivateKeyFlags & CertificateTemplateFlag.AllowKeyAttestationWithoutPolicyAssertion) == 0;
+
+        /// <summary>
+        /// The collection of AD identity principals that have rights on the certificate template along with the specification of what those rights are
+        /// </summary>
+        public List<ADCertificateTemplateAccessRule> AccessRules { get; private set; } = new List<ADCertificateTemplateAccessRule>();
 
         internal KeyAttestationType attestationType
         {
@@ -183,6 +190,31 @@ namespace EasyPKIView
             Oid = DirEntry.Properties[PropertyIndex.OID].Value.ToString();
             ValidityPeriod = ((byte[])DirEntry.Properties[PropertyIndex.ValidityPeriod].Value).ToTimeSpan();
             PrivateKeyFlags = (int)DirEntry.Properties[PropertyIndex.PrivateKeyFlags].Value;
+        }
+
+        private void GetAccessRules()
+        {
+            try
+            {
+                ActiveDirectorySecurity Sec = DirEntry.ObjectSecurity;
+                foreach (ActiveDirectoryAccessRule ADRule in Sec.GetAccessRules(true, true, typeof(NTAccount)))
+                {
+                    ADCertificateTemplateAccessRule CurrRule = new ADCertificateTemplateAccessRule(ADRule);
+
+                    if (AccessRules.FirstOrDefault(p => p.Identity.Matches(CurrRule.Identity)) == null)
+                    {
+                        AccessRules.Add(CurrRule);
+                    }
+                    else
+                    {
+                        AccessRules.ForEach(p => p.MergeIf(CurrRule));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new CertificateTemplateAccessRuleException(this, ex);
+            }
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>EasyPKIView</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <title>EasyPKIView</title>
     <authors>X509Crypto.org</authors>
     <owners>X509Crypto.org</owners>
@@ -14,7 +14,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simplifies working with PKI-related Active Directory objects (such as certificate templates and certification authorities).</description>
 	<summary>Simplifies working with PKI-related Active Directory objects (such as certificate templates and certification authorities).</summary>
-    <releaseNotes>Added additional fields to ADCertificateTemplate class</releaseNotes>
+    <releaseNotes>Added functionality to return Active Directory access rights for certificate templates</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>certificate authority pki adcs active directory template</tags>
 	<dependencies>
