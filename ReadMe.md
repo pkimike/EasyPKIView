@@ -91,7 +91,7 @@ foreach(ADCertificateTemplateAccessRule Rule in AdminTemplate.AccessRules)
 	Console.WriteLine($"Has Write Access?: {Rule.Write}");
 	Console.WriteLine($"Has Full Control?: {Rule.FullControl}");
 	Console.WriteLine($"Has Enroll Access?: {Rule.Enroll}");
-	Console.WriteLine($"Has Autoenroll Access?: {Rule.Autoenroll}");
+	Console.WriteLine($"Has Autoenroll Access?: {Rule.AutoEnroll}");
 
 	Console.WriteLine("\r\n----\r\n");
 }
