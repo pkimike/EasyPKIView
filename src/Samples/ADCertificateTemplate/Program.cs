@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using EasyPKIView;
+using EasyPKIView_API;
 
 namespace CertTemplate
 {
@@ -66,6 +67,11 @@ namespace CertTemplate
 
             Console.WriteLine($"Last Changed: {DefaultAdminTemplate.WhenChanged.ToShortDateString()}");
             // Whenever your AD forest was last upgraded 
+
+            foreach(ADCertificateTemplateAccessRule Rule in DefaultAdminTemplate.AccessRules)
+            {
+
+            }
         }
     }
 }

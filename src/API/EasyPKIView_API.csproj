@@ -23,6 +23,8 @@
       Pre-release candidate
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/MikeBrunoCISSP/EasyPKIView</PackageProjectUrl>
+    <RootNamespace>EasyPKIView</RootNamespace>
+    <AssemblyName>EasyPKIView</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
