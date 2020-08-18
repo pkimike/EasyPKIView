@@ -134,6 +134,7 @@ namespace EasyPKIView
                 throw new CertificateTemplateNotFoundException(name);
             }
             SetFieldsFromDirectoryObject();
+            GetAccessRules();
         }
 
         /// <summary>
@@ -148,6 +149,7 @@ namespace EasyPKIView
                 throw new CertificateTemplateNotFoundException();
             }
             SetFieldsFromDirectoryObject();
+            GetAccessRules();
         }
 
         /// <summary>
