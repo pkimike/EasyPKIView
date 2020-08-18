@@ -114,6 +114,41 @@
             <param name="refreshIfCached">If true, list will be generated from AD even if there is already a cached list. Default is false</param>
             <returns>A list of ADCertificateTemplate objects</returns>
         </member>
+        <member name="T:EasyPKIView.ADCertificateTemplateAccessRule">
+            <summary>
+            Describes an Active Directory identity along with its access rights to the associated certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.Identity">
+            <summary>
+            The name of the Active Directory principal (a user, group or device)
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.FullControl">
+            <summary>
+            If <strong>True</strong> the principal has complete control over the Certificate Template; it can read, modify or delete it.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.Read">
+            <summary>
+            If <strong>True</strong> the principal has access to read the certificate template object
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.Write">
+            <summary>
+            If <strong>True</strong> the principal has access to write to the certificate template object.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.Enroll">
+            <summary>
+            If <strong>True</strong> the principal has access to manually enroll against the certificate template object
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.ADCertificateTemplateAccessRule.AutoEnroll">
+            <summary>
+            If <strong>True</strong> the principal has access to automatically enroll against the certificate template object
+            </summary>
+        </member>
         <member name="T:EasyPKIView.ADCertificationAuthority">
             <summary>
             Describes a Microsoft Enterprise Certification Authority as stored in the "Enrollment Services" container in Active Directory
@@ -595,41 +630,6 @@
         <member name="F:EasyPKIView.KeyUsage.Supported">
             <summary>
             The list of supported Key usages
-            </summary>
-        </member>
-        <member name="T:EasyPKIView_API.ADCertificateTemplateAccessRule">
-            <summary>
-            Describes an Active Directory identity along with its access rights to the associated certificate template
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Identity">
-            <summary>
-            The name of the Active Directory principal (a user, group or device)
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.FullControl">
-            <summary>
-            If <strong>True</strong> the principal has complete control over the Certificate Template; it can read, modify or delete it.
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Read">
-            <summary>
-            If <strong>True</strong> the principal has access to read the certificate template object
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Write">
-            <summary>
-            If <strong>True</strong> the principal has access to write to the certificate template object.
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.Enroll">
-            <summary>
-            If <strong>True</strong> the principal has access to manually enroll against the certificate template object
-            </summary>
-        </member>
-        <member name="P:EasyPKIView_API.ADCertificateTemplateAccessRule.AutoEnroll">
-            <summary>
-            If <strong>True</strong> the principal has access to automatically enroll against the certificate template object
             </summary>
         </member>
     </members>

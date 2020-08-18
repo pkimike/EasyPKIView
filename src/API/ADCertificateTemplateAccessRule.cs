@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Text;
 
-namespace EasyPKIView_API
+namespace EasyPKIView
 {
     /// <summary>
     /// Describes an Active Directory identity along with its access rights to the associated certificate template

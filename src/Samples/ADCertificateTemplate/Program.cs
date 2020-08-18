@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using EasyPKIView;
-using EasyPKIView_API;
 
 namespace CertTemplate
 {

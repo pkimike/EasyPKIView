@@ -5,7 +5,6 @@ using System.DirectoryServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
-using EasyPKIView_API;
 using System.Security.Principal;
 
 namespace EasyPKIView

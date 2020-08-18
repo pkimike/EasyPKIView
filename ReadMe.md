@@ -78,7 +78,7 @@ var WeakTemplates = ADCertificationAuthority.GetAll()
 					    .Distinct().ToList();
 ```
 
-New for version 1.0.8 is the ability to see the effective Active Directory permissions on a certificate template object. Certificate template permissions are stored as a collection of ADCertificateTemplateAccessRule objects. Each element in the collection represents an AD principal along with its effective permissions on the template.
+New for version 1.0.9 is the ability to see the effective Active Directory permissions on a certificate template object. Certificate template permissions are stored as a collection of ADCertificateTemplateAccessRule objects. Each element in the collection represents an AD principal along with its effective permissions on the template.
 
 In the below example, we will iterate through each AD principal that has one or more permissions set on the certificate template, displaying the principal display name & whether it has each permission type:
 
