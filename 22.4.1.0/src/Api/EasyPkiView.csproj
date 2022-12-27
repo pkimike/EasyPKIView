@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net4.7.2</TargetFrameworks>
+		<files>
+			<file src="bin\Release\net472\EasyPKIView.dll" target="lib\net472\EasyPKIView.dll" />
+			<file src="bin\Release\net6.0\EasyPKIView.dll" target="lib\net6.0\EasyPKIView.dll" />
+			<file src="..\..\LICENSE.txt" target="\" />
+			<file src="..\..\images\logo_small.png" target="\" />
+		</files>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageId>MJBLogger</PackageId>
+		<Description>Simplifies working with PKI-related Active Directory objects (such as certificate templates and certification authorities).</Description>
+		<Version>22.4.1.0</Version>
+		<Authors>Mike Bruno</Authors>
+		<Company>X509Crypto.org</Company>
+		<RepositoryUrl></RepositoryUrl>
+		<PackageTags>Logging Logs EnterpriseLibrary.Logging</PackageTags>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Copyright>Copyright 2020</Copyright>
+		<PackageReleaseNotes>
+			Pre-release candidate
+		</PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/MikeBrunoCISSP/EasyPKIView</PackageProjectUrl>
+		<RootNamespace>EasyPKIView</RootNamespace>
+		<AssemblyName>EasyPKIView</AssemblyName>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<DocumentationFile>EasyPkiView_Api.xml</DocumentationFile>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.DirectoryServices" Version="7.0.0" />
+	</ItemGroup>
+
+</Project>
