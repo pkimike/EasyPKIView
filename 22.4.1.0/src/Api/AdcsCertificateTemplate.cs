@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.DirectoryServices;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Text;
@@ -67,6 +68,14 @@ namespace EasyPKIView {
         /// </summary>
         public String Oid { get; set; }
         /// <summary>
+        /// The major of this certificate template
+        /// </summary>
+        public Int32 MajorRevision { get; set; }
+        /// <summary>
+        /// The minor of this certificate template
+        /// </summary>
+        public Int32 MinorRevision { get; set; }
+        /// <summary>
         /// The certificate template version. Version 1 = Compatible with Windows 2000 and up, Version 2 = WS2003 and up, and so on.
         /// </summary>
         public Int32 SchemaVersion { get; set; }
@@ -78,6 +87,10 @@ namespace EasyPKIView {
         /// The enhanced key usages asserted by the certificate template
         /// </summary>
         public EnhancedKeyUsageFlags EnhancedKeyUsages { get; set; } = EnhancedKeyUsageFlags.None;
+        /// <summary>
+        /// Critical extensions asserted by the template
+        /// </summary>
+        public List<Oid> CriticalExtensions { get; set; }
         /// <summary>
         /// Enhanced key usages which are custom to the current Active Directory Forest
         /// </summary>
@@ -126,22 +139,20 @@ namespace EasyPKIView {
         /// See https://tinyurl.com/y25l2h8p for more details.
         /// </summary>
         public Boolean RequiresStrongKeyProtection { get; set; }
-        /// <summary>
-        /// Type of key attestation (if applicable) asserted by the certificate template
-        /// </summary>
-        public KeyAttestationType KeyAttestationType { get; set; }
-        /// <summary>
-        /// Indicates whether this certificate template should require TPM Key Attestation. See https://tinyurl.com/y9c6oxnp for more details.
-        /// </summary>
-        public Boolean KeyAttestationRequired { get; set; }
-        /// <summary>
-        /// Indicates whether this certificate template should use TPM Key Attestation if the client supports it.
-        /// </summary>
-        public Boolean KeyAttestationPreferred { get; set; }
+
+        public KeyAttestationEnforcement KeyAttestationEnforcement { get; set; }
         /// <summary>
         /// Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
         /// </summary>
         public Boolean AssertsKeyAttestationPolicy { get; set; }
+        /// <summary>
+        /// Minimum Client OS that can request against this template
+        /// </summary>
+        public String MinimumSupportedClient { get; set; }
+        /// <summary>
+        /// Minimum Server OS where ADCS can issue against this template
+        /// </summary>
+        public String MinimumSupportedServer { get; set; }
         /// <summary>
         /// The transient Ids of the issuing CAs to which this template is assigned.
         /// </summary>
@@ -171,17 +182,90 @@ namespace EasyPKIView {
         void setPropertiesFromDirectoryObject() {
             SchemaVersion = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.Version].Value);
             KeyUsages = (X509KeyUsageFlags)DirEntry.Properties[DsPropertyIndex.KeyUsage].Value;
-            RASignaturesRequired = (Int32)DirEntry.Properties[DsPropertyIndex.RASignaturesRequired].Value;
-            MinimumPublicKeyLength = (Int32)DirEntry.Properties[DsPropertyIndex.MinimumKeySize].Value;
+            RASignaturesRequired = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.RASignaturesRequired].Value);
+            MinimumPublicKeyLength = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.MinimumKeySize].Value);
             Oid = DirEntry.Properties[DsPropertyIndex.OID].Value.ToString();
             ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyIndex.ValidityPeriod].Value).ToTimeSpan();
             GeneralFlags = ((CertificateTemplateFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateGeneralFlags].Value);
             SubjectNameFlags = ((CertificateTemplateNameFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateSubjectNameFlags].Value);
             EnrollmentFlags = ((CertificateTemplateEnrollmentFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateEnrollmentFlags].Value);
+        }
 
+        void setCalculatedProperties() {
+            MajorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.CertTemplateMajorRevision].Value);
+            MinorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.CertTemplateMinorRevision].Value);
             KeyArchivalRequired = (PrivateKeyFlags & PrivateKeyFlags.RequireKeyArchival) > 0;
             ExportablePrivateKey = (PrivateKeyFlags & PrivateKeyFlags.AllowKeyExport) > 0;
             RequiresStrongKeyProtection = (PrivateKeyFlags & PrivateKeyFlags.RequireStrongProtection) > 0;
+            if ((PrivateKeyFlags & PrivateKeyFlags.AttestationRequired) > 0) {
+                KeyAttestationEnforcement = KeyAttestationEnforcement.Required;
+            } else if ((PrivateKeyFlags & PrivateKeyFlags.AttestationPreferred) > 0) {
+                KeyAttestationEnforcement = KeyAttestationEnforcement.Preferred;
+            }
+
+            if (KeyAttestationEnforcement > 0) {
+                if ((PrivateKeyFlags & PrivateKeyFlags.TrustOnUse) > 0) {
+                    KeyAttestationMethods |= KeyAttestationMethodFlags.TrustOnUse;
+                }
+                if ((PrivateKeyFlags & PrivateKeyFlags.ValidateCert) > 0) {
+                    KeyAttestationMethods |= KeyAttestationMethodFlags.ValidateCert;
+                }
+                if ((PrivateKeyFlags & PrivateKeyFlags.ValidateKey) > 0) {
+                    KeyAttestationMethods |= KeyAttestationMethodFlags.ValidateKey;
+                }
+
+                AssertsKeyAttestationPolicy = (PrivateKeyFlags & PrivateKeyFlags.AttestationWithoutPolicy) == 0;
+            }
+            setMinimumSupportedClient();
+            setMinimumSupportedServer();
+        }
+        void setMinimumSupportedClient() {
+            const Int32 mask = 0x0F000000;
+
+            PrivateKeyFlags result = PrivateKeyFlags & (PrivateKeyFlags)mask;
+            MinimumSupportedClient = result switch {
+                PrivateKeyFlags.None        => getLegacyClientSupport(),
+                PrivateKeyFlags.ClientXP    => "Windows XP / Windows Server 2003",
+                PrivateKeyFlags.ClientVista => "Windows Vista / Windows Server 2008",
+                PrivateKeyFlags.ClientWin7  => "Windows 7 / Windows Server 2008 R2",
+                PrivateKeyFlags.ClientWin8  => "Windows 8 / Windows Server 2012",
+                PrivateKeyFlags.ClientWin81 => "Windows 8.1 / Windows Server 2012 R2",
+                PrivateKeyFlags.ClientWin10 => "Windows 10 / Windows Server 2016",
+                _                           => "Unknown"
+            };
+        }
+        String getLegacyClientSupport() {
+            return SchemaVersion switch {
+                1 => "Windows 2000",
+                2 => "Windows XP",
+                3 => "Windows Vista",
+                4 => "Windows 8",
+                _ => "Unknown"
+            };
+        }
+        void setMinimumSupportedServer() {
+            const Int32 mask = 0x000F0000;
+            PrivateKeyFlags result = PrivateKeyFlags & (PrivateKeyFlags)mask;
+
+            MinimumSupportedServer = result switch {
+                PrivateKeyFlags.None         => getLegacyServerSupport(),
+                PrivateKeyFlags.Server2003   => "Windows Server 2003",
+                PrivateKeyFlags.Server2008   => "Windows Server 2008",
+                PrivateKeyFlags.Server2008R2 => "Windows Server 2008 R2",
+                PrivateKeyFlags.Server2012   => "Windows Server 2012",
+                PrivateKeyFlags.Server2012R2 => "Windows Server 2012 R2",
+                PrivateKeyFlags.Server2016   => "Windows Server 2016",
+                                           _ => "Unknown"
+            };
+        }
+        String getLegacyServerSupport() {
+            return SchemaVersion switch {
+                1 => "Windows 2000 Server",
+                2 => "Windows Server 2003",
+                3 => "Windows Server 2008",
+                4 => "Windows Serve 2012",
+                _ => "Unknown"
+            };
         }
         void setAccessRules() {
             try {

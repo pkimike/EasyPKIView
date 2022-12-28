@@ -95,7 +95,7 @@ namespace EasyPKIView {
         /// This template is supported by Windows Server 2016 CA server or newer.
         /// <para><strong>Note:</strong> this template is not supported by Enrollment Web Services.</para>
         /// </summary>
-        Server2016R2                      = 0x00060000,
+        Server2016                      = 0x00060000,
         /// <summary>
         /// This flag indicates that the key is used for Windows Hello logon.
         /// </summary>
