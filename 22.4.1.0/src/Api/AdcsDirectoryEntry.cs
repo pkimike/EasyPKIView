@@ -17,11 +17,11 @@ namespace EasyPKIView
             ObjectType = objectType;
         }
 
-        protected AdcsDirectoryEntry(AdcsObjectType objectType, DirectoryEntry dEntry, String expectedObjectClass) : this(objectType) {
-            setFieldsFromDirectoryEntry(dEntry, expectedObjectClass);
+        protected AdcsDirectoryEntry(AdcsObjectType objectType, DirectoryEntry dEntry) : this(objectType) {
+            setFieldsFromDirectoryEntry(objectType, dEntry);
         }
 
-        public AdcsDirectoryEntry(AdcsObjectType objectType, String ldapURL, string expectedObjectClass) : this(objectType, new DirectoryEntry(ldapURL), expectedObjectClass) { }
+        public AdcsDirectoryEntry(AdcsObjectType objectType, String ldapURL) : this(objectType, new DirectoryEntry(ldapURL)) { }
 
         public Guid TransientId { get; set; }
         public AdcsObjectType ObjectType { get; set; }
@@ -34,14 +34,14 @@ namespace EasyPKIView
 
         protected DirectoryEntry DirEntry { get; set; }
 
-        void setFieldsFromDirectoryEntry(DirectoryEntry dEntry, String expectedObjectClass) {
+        void setFieldsFromDirectoryEntry(AdcsObjectType expectedObjectType, DirectoryEntry dEntry) {
             if (dEntry is null) {
                 ObjectType = AdcsObjectType.None;
                 return;
             }
 
             var objectClass = (Object[])dEntry.Properties[DsPropertyIndex.ObjectClass]?.Value;
-            if (objectClass is null || objectClass.Length < 2 || !objectClass[1].ToString().Equals(expectedObjectClass, StringComparison.InvariantCultureIgnoreCase))
+            if (objectClass is null || objectClass.Length < 2 || !objectClass[1].ToString().Equals(expectedObjectType.AsString(), StringComparison.InvariantCultureIgnoreCase))
             {
                 ObjectType = AdcsObjectType.None;
                 return;

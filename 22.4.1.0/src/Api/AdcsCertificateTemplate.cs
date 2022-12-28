@@ -48,6 +48,21 @@ namespace EasyPKIView {
         };
 
         /// <summary>
+        /// Default constructor
+        /// </summary>
+        public AdcsCertificateTemplate() { }
+
+        public AdcsCertificateTemplate(DirectoryEntry dEntry) : base(AdcsObjectType.CertificateTemplate, dEntry) {
+            if (ObjectType == AdcsObjectType.None) {
+                throw new CertificateTemplateNotFoundException();
+            }
+        }
+        public AdcsCertificateTemplate(String name) : base(AdcsObjectType.CertificateTemplate, LdapUrls.GetCertificateTemplateLdapUrl(name)) {
+            if (ObjectType == AdcsObjectType.CertificateTemplate) {
+                throw new CertificateTemplateNotFoundException(name);
+            }
+        }
+        /// <summary>
         /// The object ID of the certificate template
         /// </summary>
         public String Oid { get; set; }
@@ -91,6 +106,8 @@ namespace EasyPKIView {
         /// Certificate template subject name flags
         /// </summary>
         public CertificateTemplateNameFlags SubjectNameFlags { get; set; }
+
+        public CertificateTemplateEnrollmentFlags EnrollmentFlags { get; set; }
         /// <summary>
         /// Key attestation methods
         /// </summary>
@@ -125,6 +142,10 @@ namespace EasyPKIView {
         /// Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
         /// </summary>
         public Boolean AssertsKeyAttestationPolicy { get; set; }
+        /// <summary>
+        /// The transient Ids of the issuing CAs to which this template is assigned.
+        /// </summary>
+        public List<Guid> AssignedEnrollmentServices;
 
         /// <summary>
         /// The collection of AD identity principals that have rights on the certificate template along with the specification of what those rights are
@@ -147,12 +168,25 @@ namespace EasyPKIView {
             }
         }
 
+        void setPropertiesFromDirectoryObject() {
+            SchemaVersion = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.Version].Value);
+            KeyUsages = (X509KeyUsageFlags)DirEntry.Properties[DsPropertyIndex.KeyUsage].Value;
+            RASignaturesRequired = (Int32)DirEntry.Properties[DsPropertyIndex.RASignaturesRequired].Value;
+            MinimumPublicKeyLength = (Int32)DirEntry.Properties[DsPropertyIndex.MinimumKeySize].Value;
+            Oid = DirEntry.Properties[DsPropertyIndex.OID].Value.ToString();
+            ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyIndex.ValidityPeriod].Value).ToTimeSpan();
+            GeneralFlags = ((CertificateTemplateFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateGeneralFlags].Value);
+            SubjectNameFlags = ((CertificateTemplateNameFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateSubjectNameFlags].Value);
+            EnrollmentFlags = ((CertificateTemplateEnrollmentFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateEnrollmentFlags].Value);
+
+            KeyArchivalRequired = (PrivateKeyFlags & PrivateKeyFlags.RequireKeyArchival) > 0;
+            ExportablePrivateKey = (PrivateKeyFlags & PrivateKeyFlags.AllowKeyExport) > 0;
+            RequiresStrongKeyProtection = (PrivateKeyFlags & PrivateKeyFlags.RequireStrongProtection) > 0;
+        }
         void setAccessRules() {
-            try
-            {
+            try {
                 ActiveDirectorySecurity sd = DirEntry.ObjectSecurity;
-                foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount)))
-                {
+                foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount))) {
                     String identity = rule.IdentityReference?.ToString();
                     if (identity is null) {
                         continue;
