@@ -9,7 +9,7 @@ namespace EasyPKIView
     /// <summary>
     /// Describes an entry in the Public Key Services container of Active Directory
     /// </summary>
-    interface IAdcsDirectoryEntry {
+    public interface IAdcsDirectoryEntry {
         /// <summary>
         /// The unique ID of this entry in the collection
         /// </summary>

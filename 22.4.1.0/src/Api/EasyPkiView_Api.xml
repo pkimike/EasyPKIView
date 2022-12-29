@@ -1,0 +1,1156 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyPKIView</name>
+    </assembly>
+    <members>
+        <member name="T:EasyPKIView.AdcsObjectType">
+            <summary>
+            ADCS Directory Object type.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsObjectType.None">
+            <summary>
+            Not an ADCS directory object.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsObjectType.EnrollmentService">
+            <summary>
+            Enrollment service (online CA).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsObjectType.CertificateTemplate">
+            <summary>
+            Certificate Template.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate">
+            <summary>
+            ADCS Certificate Template
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.Oid">
+            <summary>
+            The object ID of the certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.MajorRevision">
+            <summary>
+            The major of this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.MinorRevision">
+            <summary>
+            The minor of this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.SchemaVersion">
+            <summary>
+            The certificate template version. Version 1 = Compatible with Windows 2000 and up, Version 2 = WS2003 and up, and so on.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.KeyUsages">
+            <summary>
+            The list of key usages asserted by certificates issued using this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.EnhancedKeyUsages">
+            <summary>
+            The enhanced key usages asserted by the certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.CriticalExtensions">
+            <summary>
+            Critical extensions asserted by the template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.RASignaturesRequired">
+            <summary>
+            The number of certificate request agents a certificate request must be signed by in order to obtain a certificate using this template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.MinimumPublicKeyLength">
+            <summary>
+            The minimum key size of the public key enforced by this certificate template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.ValidityPeriod">
+            <summary>
+            The amount of time for which certificates issued from this template are valid
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.PrivateKeyFlags">
+            <summary>
+            Private key flags
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.GeneralFlags">
+            <summary>
+            General certificate template flags
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.SubjectNameFlags">
+            <summary>
+            Certificate template subject name flags
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.EnrollmentFlags">
+            <summary>
+            Certificate Template Enrollment flags
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.KeyAttestationMethods">
+            <summary>
+            Key attestation methods
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.KeyArchivalRequired">
+            <summary>
+            Indicates whether the certificate template requires the CA to archive the subject's private key
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.ExportablePrivateKey">
+            <summary>
+            Indicates whether the private key associated with certificates issued from this template
+            should be exportable from the host on which they were created (only meaningful on Windows clients)
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.RequiresStrongKeyProtection">
+            <summary>
+            Indicates whether this certificate template should enforce strong private key protection.
+            See https://tinyurl.com/y25l2h8p for more details.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.IsOffline">
+            <summary>
+            If true, the template requires that the enrollee supply the subject information in the certificate request
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.KeyAttestationEnforcement">
+            <summary>
+            Indicates whether or how key attestation is enforced by the template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.AssertsKeyAttestationPolicy">
+            <summary>
+            Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.MinimumSupportedClient">
+            <summary>
+            Minimum Client OS that can request against this template
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.MinimumSupportedServer">
+            <summary>
+            Minimum Server OS where ADCS can issue against this template
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.AssignedEnrollmentServices">
+            <summary>
+            The transient Ids of the issuing CAs to which this template is assigned.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.AccessRules">
+            <summary>
+            The collection of AD identity principals that have rights on the certificate template along with the specification of what those rights are
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.SetAssignedEnrollmentServices(System.Collections.Generic.List{EasyPKIView.EnrollmentServices.AdcsEnrollmentService})">
+            <summary>
+            Sets the list of ids of enrollment services to which this template is assigned.
+            </summary>
+            <param name="enrollmentServices"></param>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.GetAssignedEnrollmentServices(System.Collections.Generic.List{EasyPKIView.EnrollmentServices.AdcsEnrollmentService})">
+            <summary>
+            Gets the list of enrollment services to which this template is assigned.
+            </summary>
+            <param name="enrollmentServices">The list of enrollment services published in Active Directory.</param>
+            <returns>The list of enrollment services to which this template is assigned.</returns>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate.GetAllFromDirectory">
+            <summary>
+            Gets all certificate templates which exist in the current Active Directory forest.
+            </summary>
+            <returns>A list of certificate templates</returns>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags">
+            <summary>
+            Defines certificate template enrollment flags.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.None">
+            <summary>
+            No rights.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.Read">
+            <summary>
+            Read permissions
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.Write">
+            <summary>
+            Write permissions
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.FullControl">
+            <summary>
+            Full control.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.Enroll">
+            <summary>
+            Enroll permission.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateAccessFlags.Autoenroll">
+            <summary>
+            Autoenroll permission
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags">
+            <summary>
+            Defines certificate template enrollment flags.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.IncludeSymmetricAlgorithms">
+            <summary>
+            This flag instructs the client and server to include a Secure/Multipurpose Internet Mail Extensions (S/MIME)
+            certificate extension, as specified in <see href="http://tools.ietf.org/html/rfc4262">RFC4262</see>,
+            in the request and in the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.CAManagerApproval">
+            <summary>
+            This flag instructs the CA to put all requests in a pending state.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.KraPublish">
+            <summary>
+            This flag instructs the CA to publish the issued certificate to the key recovery agent (KRA) container in Active Directory.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.DsPublish">
+            <summary>
+            This flag instructs clients and CA servers to append the issued certificate to the <strong>userCertificate</strong>
+            attribute, as specified in <see href="http://tools.ietf.org/html/rfc4523">RFC4523</see>, on the user object
+            in Active Directory.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.AutoenrollmentCheckDsCert">
+            <summary>
+            This flag instructs clients not to do autoenrollment for a certificate based on this template if the user's
+            <strong>userCertificate</strong> attribute (specified in <see href="http://tools.ietf.org/html/rfc4523">RFC4523</see>)
+            in Active Directory has a valid certificate based on the same template.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.Autoenrollment">
+            <summary>
+            This flag instructs clients to perform autoenrollment for the specified template.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.ReenrollExistingCert">
+            <summary>
+            This flag instructs clients to sign the renewal request using the private key of the existing certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.RequireUserInteraction">
+            <summary>
+            This flag instructs the client to obtain user consent before attempting to enroll for a certificate that is based
+            on the specified template.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.RemoveInvalidFromStore">
+            <summary>
+            This flag instructs the autoenrollment client to delete any certificates that are no longer needed based on the
+            specific template from the local certificate storage.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.AllowEnrollOnBehalfOf">
+            <summary>
+            This flag instructs the server to allow enroll on behalf of (<strong>EOBO</strong>) functionality.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.IncludeOcspRevNoCheck">
+            <summary>
+            This flag instructs the server to not include revocation information and add the id-pkix-ocsp-nocheck extension,
+            as specified in <see href="http://tools.ietf.org/html/rfc2560">RFC2560</see> section §4.2.2.2.1, to the certificate
+            that is issued.
+            <para><strong>Windows Server 2003</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.ReuseKeyTokenFull">
+            <summary>
+            This flag instructs the client to reuse the private key for a smart card–based certificate renewal if it is unable
+            to create a new private key on the card.
+            <para><strong>Windows XP, Windows Server 2003</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.NoRevocationInformation">
+            <summary>
+            This flag instructs the server to not include revocation information in the issued certificate.
+            <para><strong>Windows Server 2003, Windows Server 2008</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.BasicConstraintsInEndEntityCerts">
+            <summary>
+            This flag instructs the server to include Basic Constraints extension in the end entity certificates.
+            <para><strong>Windows Server 2003, Windows Server 2008</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.IgnoreEnrollOnReenrollment">
+            <summary>
+            This flag instructs the CA to ignore the requirement for <strong>Enroll</strong> permissions on the template when
+            processing renewal requests.
+            <para><strong>Windows Server 2003, Windows Server 2008, Windows Server 2008 R2</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.IssuancePoliciesFromRequest">
+            <summary>
+            This flag indicates that the certificate issuance policies to be included in the issued certificate come from the
+            request rather than from the template. The template contains a list of all of the issuance policies that the request
+            is allowed to specify; if the request contains policies that are not listed in the template, then the request is rejected.
+            <para><strong>Windows Server 2003, Windows Server 2008, Windows Server 2008 R2</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.SkipAutoRenewal">
+            <summary>
+            This flag instructs autoenrollment client to not renew certificate although the certificate meets all conditions
+            for automatic renewal, i.e. initial automatic certificate enrollment is enabled and subsequent renewal is disabled.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateEnrollmentFlags.DoNotIncludeSidExtension">
+            <summary>
+            Instructs Enterprise CA to not include SID extension in issued certificates that use subject construction from Active Directory.
+            More information in <see href="https://support.microsoft.com/kb/5014754">KB5014754</see>
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.CertificateTemplateExtension`1">
+            <summary>
+            Certificate template extension.
+            </summary>
+            <typeparam name="T">Contains the extension value</typeparam>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.CertificateTemplateExtension`1.Oid">
+            <summary>
+            The OID of this extension.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.CertificateTemplateExtension`1.Value">
+            <summary>
+            The value of this extension.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.CertificateTemplateExtension`1.IsCritical">
+            <summary>
+            Indicates whether this extension is critical or not.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.CertificateTemplateFlags">
+            <summary>
+            Defines the general-enrollment flags.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.EnrolleeSuppliesSubject">
+            <summary>
+            The certificate subject is supplied in the request.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AddEmail">
+            <summary>
+            The subject's Email address must be included in the certificate
+            Only applicable if the subject is built from directory
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AddObjectIdentifier">
+            <summary>
+            This flag is reserved and not used.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.DsPublish">
+            <summary>
+            The issued certificate must be published to the subject's directory entry.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AllowKeyExport">
+            <summary>
+            (Windows only) The private key is exportable. 
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.Autoenrollment">
+            <summary>
+            This flag indicates whether clients can perform autoenrollment for the specified template.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.MachineType">
+            <summary>
+            The end-entity is a computer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.IsCA">
+            <summary>
+            The end-entity is a certification authority.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AddDirectoryPath">
+            <summary>
+            Adds requester distinguished name.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AddTemplateName">
+            <summary>
+            This flag indicates that a certificate based on this section needs to include a template name certificate extension.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.AddSubjectDirectoryPath">
+            <summary>
+            Adds requester distinguished name.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.IsCrossCA">
+            <summary>
+            This flag indicates a certificate request for cross-certifying a certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.DoNotPersistInDB">
+            <summary>
+            This flag indicates that the record of a certificate request for a certificate that is issued need not be persisted by the CA.
+            <para><strong>Windows Server 2003, Windows Server 2008</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.IsDefault">
+            <summary>
+            This flag indicates that the template SHOULD not be modified in any way.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.IsModified">
+            <summary>
+            This flag indicates that the template MAY be modified if required.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.IsDeleted">
+            <summary>
+            N/A
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateFlags.PolicyMismatch">
+            <summary>
+            N/A
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags">
+            <summary>
+            Defines flags that determine how certificate subject is constructed.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.EnrolleeSuppliesSubject">
+            <summary>
+            This flag instructs the client to supply subject information in the certificate request.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.OldCertSuppliesSubjectAndAltName">
+            <summary>
+            This flag instructs the client to reuse values of subject name and alternative subject name extensions from an existing valid
+            certificate when creating a certificate renewal request.
+            <para><strong>Windows Server 2003, Windows Server 2008</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.EnrolleeSuppluiesAltSubject">
+            <summary>
+            This flag instructs the client to supply subject alternate name information in the certificate request.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireDomainDNS">
+            <summary>
+            This flag instructs the CA to add the value of the requester FQDN and NetBIOS name to the Subject Alternative Name extension
+            of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireSPN">
+            <summary>
+            This flag instructs the CA to add the value of the requester Service Principal name to the Subject Alternative Name extension
+            of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireDirectoryGUID">
+            <summary>
+            This flag instructs the CA to add the value of the objectGUID attribute from the requester user object in Active Directory to the
+            Subject Alternative Name extension of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireUPN">
+            <summary>
+            This flag instructs the CA to add the value of the UPN attribute from the requester user object in Active Directory to the
+            Subject Alternative Name extension of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireEmail">
+            <summary>
+            This flag instructs the CA to add the value of the e-mail attribute from the requester user object in Active Directory to the
+            Subject Alternative Name extension of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.AltSubjectRequireDNS">
+            <summary>
+            This flag instructs the CA to add the value obtained from the DNS attribute of the requester user object in Active Directory to the
+            Subject Alternative Name extension of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.SubjectRequireDNSasCN">
+            <summary>
+            This flag instructs the CA to add the value obtained from the DNS attribute of the requester user object in Active Directory as the
+            CN in the subject of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.SubjectRequireEmail">
+            <summary>
+            This flag instructs the CA to add the value of the e-mail attribute from the requester user object in Active Directory as the
+            subject of the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.SubjectRequireCommonName">
+            <summary>
+            This flag instructs the CA to set the subject name to the requester CN from Active Directory.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.CertificateTemplateNameFlags.SubjectRequireDirectoryPath">
+            <summary>
+            This flag instructs the CA to set the subject name to the requester distinguished name (DN) from Active Directory.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.EnhancedKeyUsageExtension">
+            <summary>
+            Enhanced key usage extension
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.EnhancedKeyUsageExtension.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.EnhancedKeyUsageExtension.#ctor(EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags)">
+            <summary>
+            This constructor accepts enhanced key usage flags.
+            </summary>
+            <param name="value">Enhanced key usage flags value</param>
+        </member>
+        <member name="P:EasyPKIView.CertificateTemplates.EnhancedKeyUsageExtension.Custom">
+            <summary>
+            The list of custom enhanced key usage OIDs.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags">
+            <summary>
+            Defines flags that determine how certificate subject is constructed.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.ClientAuthentication">
+            <summary>
+            The certificate can be used for authenticating a client.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.ServerAuthentication">
+            <summary>
+            The certificate can be used for server authentication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.SecureEmail">
+            <summary>
+            The certificate can be used to encrypt email messages.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.EFS">
+            <summary>
+            The certificate can be used to encrypt files by using the Encrypting File System (EFS).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.SmartcardLogon">
+            <summary>
+            The certificate enables an individual to log on to a computer by using a smart card.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CodeSigning">
+            <summary>
+            The certificate can be used for signing code.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.OCSPResponseSigning">
+            <summary>
+            The certificate can be used for Online Certificate Status Protocol (OCSP) signing.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CAExchange">
+            <summary>
+            	The certificate can be used for archiving a private key on a certification authority.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CTLSigning">
+            <summary>
+            The certificate can be used to sign a Certificate Trust List (CTL).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.DocumentSigning">
+            <summary>
+            The certificate can be used for signing documents.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.EFSDataRecovery">
+            <summary>
+            The certificate can be used for recovery of documents protected by using Encrypting File System (EFS).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.KeyRecovery">
+            <summary>
+            	The certificate can be used to encrypt and recover escrowed keys.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.KeyRecoveryAgent">
+            <summary>
+            The certificate is used to identify a key recovery agent.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.LifetimeSigning">
+            <summary>
+            Limits the validity period of a signature to the validity period of the certificate. This restriction is typically used with the XCN_OID_PKIX_KP_CODE_SIGNING OID value to indicate that new time stamp semantics should be used.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.QualifiedSubordination">
+            <summary>
+            The certificate can be used to sign cross certificate and subordinate certification authority certificate requests. Qualified subordination is implemented by applying basic constraints, certificate policies, and application policies. Cross certification typically requires policy mapping.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.WindowsNTEmbeddedCryptography">
+            <summary>
+            The certificate can be used for Windows NT Embedded cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.TimestampSigning">
+            <summary>
+            The certificate can be used to sign a time stamp to be added to a document. Time stamp signing is typically part of a time stamping service.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.LicenseServerVerification">
+            <summary>
+            The certificate can be used by a license server when transacting with Microsoft to receive licenses for Terminal Services clients
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.KeyPackLicenses">
+            <summary>
+            The certificate can be used for key pack licenses.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.OemWindowsSystemComponentVerification">
+            <summary>
+            The certificate can be used for used for Original Equipment Manufacturers (OEM) Windows Hardware Quality Labs (WHQL) cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CTLAutoenrollment">
+            <summary>
+            The certificate can be used to sign a request for automatic enrollment in a certificate trust list (CTL). 
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CertificateEnrollmentAgent">
+            <summary>
+            The certificate can be used by an enrollment agent.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.DSEmailReplication">
+            <summary>
+            The certificate can be used for Directory Service email replication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.IPSec">
+            <summary>
+            The certificate can be used for signing end-to-end Internet Protocol Security (IPSEC) communication.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.IPSecTunnel">
+            <summary>
+            The certificate can be used for singing IPSEC communication in tunnel mode.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.IPSecUser">
+            <summary>
+            The certificate can be used for an IPSEC user.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.IKEIntermediate">
+            <summary>
+            The certificate can be used for Internet Key Exchange (IKE).
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.DRMSigning">
+            <summary>
+            The certificate can be used for digital rights management applications.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.PKITimestampSigning">
+            <summary>
+            The certificate can be used for signing public key infrastructure timestamps.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.CertificateRootListSigning">
+            <summary>
+            The certificate can be used sign a certificate root list.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.WindowsHardwareDriverVerification">
+            <summary>
+            The certificate can be used for Windows Hardware Quality Labs (WHQL) cryptography.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.EnhancedKeyUsageFlags.Any">
+            <summary>
+            The certificate can be used for any purpose
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.KeyAttestationEnforcement">
+            <summary>
+            Indicates whether or how key attestation is enforced by the template
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationEnforcement.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationEnforcement.Preferred">
+            <summary>
+            Key attestation is preferred but not required.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationEnforcement.Required">
+            <summary>
+            Key attestation is required.
+            If the CA or client is incapable of key attestation, the request will be denied.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.KeyAttestationMethodFlags">
+            <summary>
+            Indicates what key attestation will be performed based on.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationMethodFlags.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationMethodFlags.TrustOnUse">
+            <summary>
+            This flag indicates that attestation based on the user's credentials is to be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationMethodFlags.ValidateCert">
+            <summary>
+            This flag indicates that attestation based on the hardware certificate of the Trusted Platform Module (TPM)
+            is to be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.KeyAttestationMethodFlags.ValidateKey">
+            <summary>
+            This flag indicates that attestation based on the hardware key of the TPM is to be performed.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.KeyUsageExtension">
+            <summary>
+            Key usage extension
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.KeyUsageExtension.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplates.KeyUsageExtension.#ctor(System.Security.Cryptography.X509Certificates.X509KeyUsageFlags)">
+            <summary>
+            This constructor accepts <see cref="T:System.Security.Cryptography.X509Certificates.X509KeyUsageFlags"/>
+            </summary>
+            <param name="value">Key usage flags</param>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplates.PrivateKeyFlags">
+            <summary>
+            Defines private key configuration settings in certificate templates.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.None">
+            <summary>
+            This flag indicates that attestation data is not required when creating the certificate request.
+            It also instructs the server to not add any attestation OIDs to the issued certificate.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.RequireKeyArchival">
+            <summary>
+            This flag instructs the client to create a key archival certificate request.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.AllowKeyExport">
+            <summary>
+            This flag instructs the client to allow other applications to copy the private key to a .pfx file at a later time.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.RequireStrongProtection">
+            <summary>
+            This flag instructs the client to use additional protection for the private key.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.RequireAlternateSignatureAlgorithm">
+            <summary>
+            This flag instructs the client to use an alternate signature format.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ReuseKeysRenewal">
+            <summary>
+            This flag instructs the client to use the same key when renewing the certificate.
+            <para><strong>Windows Server 2003, Windows Server 2008, Windows Server 2008 R2</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.UseLegacyProvider">
+            <summary>
+            This flag instructs the client to process the msPKI-RA-Application-Policies attribute.
+            <para><strong>Windows Server 2003, Windows Server 2008, Windows Server 2008 R2</strong> - this flag is not supported.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.TrustOnUse">
+            <summary>
+            This flag indicates that attestation based on the user's credentials is to be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ValidateCert">
+            <summary>
+            This flag indicates that attestation based on the hardware certificate of the Trusted Platform Module (TPM)
+            is to be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ValidateKey">
+            <summary>
+            This flag indicates that attestation based on the hardware key of the TPM is to be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.AttestationPreferred">
+            <summary>
+            This flag informs the client that it SHOULD include attestation data if it is capable of doing
+            so when creating the certificate request. It also instructs the server that attestation might or
+            might not be completed before any certificates can be issued.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.AttestationRequired">
+            <summary>
+            This flag informs the client that attestation data is required when creating the certificate request.
+            It also instructs the server that attestation must be completed before any certificates can be issued.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.AttestationWithoutPolicy">
+            <summary>
+            This flag instructs the server to not add any certificate policy OIDs to the issued certificate even though
+            attestation SHOULD be performed.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2003">
+            <summary>
+            This template is supported by Windows Server 2003 CA server or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2008">
+            <summary>
+            This template is supported by Windows Server 2008 CA server or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2008R2">
+            <summary>
+            This template is supported by Windows Server 2008 R2 CA server or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2012">
+            <summary>
+            This template is supported by Windows Server 2012 CA server or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2012R2">
+            <summary>
+            This template is supported by Windows Server 2012 R2 CA server or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.Server2016">
+            <summary>
+            This template is supported by Windows Server 2016 CA server or newer.
+            <para><strong>Note:</strong> this template is not supported by Enrollment Web Services.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.HelloLogonKey">
+            <summary>
+            This flag indicates that the key is used for Windows Hello logon.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientXP">
+            <summary>
+            This template is supported by Windows XP/Windows Server 2003 client or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientVista">
+            <summary>
+            This template is supported by Windows Vista/Windows Server 2008 client or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientWin7">
+            <summary>
+            This template is supported by Windows 7/Windows Server 2008 R2 client or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientWin8">
+            <summary>
+            This template is supported by Windows 8/Windows Server 2012 client or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientWin81">
+            <summary>
+            This template is supported by Windows 8.1/Windows Server 2012 R2 client or newer.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.CertificateTemplates.PrivateKeyFlags.ClientWin10">
+            <summary>
+            This template is supported by Windows 10/Windows Server 2016 client or newer.
+            <para><strong>Note:</strong> this template is not supported by Enrollment Web Services.</para>
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.EnrollmentServices.AdcsEnrollmentService">
+            <summary>
+            ADCS Enrollment service.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.#ctor(System.String)">
+            <summary>
+            Accepts a CA common name.
+            </summary>
+            <param name="name">A CA common name.</param>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.#ctor(System.DirectoryServices.DirectoryEntry)">
+            <summary>
+            Accepts the directory entry of an enrollment service.
+            </summary>
+            <param name="dEntry">The directory entry of an enrollment service.</param>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Accepts the public certificate of a CA
+            </summary>
+            <param name="caCertificate">The public certificate of a CA</param>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.Certificate">
+            <summary>
+            The CA's public certificate.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.IsEnterprise">
+            <summary>
+            Indicates whether the CA is an enterprise or a standalone CA.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.DnsHostName">
+            <summary>
+            The DNS name of the host where the CA is installed.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.Name">
+            <summary>
+            The common name of the CA.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.CaCertificateDn">
+            <summary>
+            The Distinguished name of the CA's certificate
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.Flags">
+            <summary>
+            Enrollment service flags
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.PublishedCertificateTemplates">
+            <summary>
+            The transient IDs of the certificate templates that are assigned to this CA.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.GetCAConfigName">
+            <summary>
+            Gets the CA Config string.
+            </summary>
+            <returns>The CA Config string</returns>
+        </member>
+        <member name="M:EasyPKIView.EnrollmentServices.AdcsEnrollmentService.GetPublishedCertificateTemplates(System.Collections.Generic.List{EasyPKIView.CertificateTemplates.AdcsCertificateTemplate})">
+            <summary>
+            Gets the list of certificate templates assigned to this CA.
+            </summary>
+            <param name="entries">The collection of certificate templates in the Active Directory Forest.</param>
+            <returns>The list of certificate templates assigned to this CA.</returns>
+        </member>
+        <member name="T:EasyPKIView.EnrollmentServices.EnrollmentServiceFlags">
+            <summary>
+            Defines the general-enrollment flags.
+            <para>This enumeration has a <see cref="T:System.FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.EnrollmentServices.EnrollmentServiceFlags.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.EnrollmentServices.EnrollmentServiceFlags.Unknown">
+            <summary>
+            Unclear what this bit position does, but it appears to always be set.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.EnrollmentServices.EnrollmentServiceFlags.IsEnterprise">
+            <summary>
+            Indicates that the enrollment service is an Enterprise CA.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.ExtendedKeyUsageAlreadyExistsException">
+            <summary>
+            Thrown if a new Extended Key Usage (EKU) is attempted to be established, but the new EKU contains a name or OID that already exists.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateNotFoundException">
+            <summary>
+            Thrown if a certificate template cannot be found in Active Directory
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateOidNotFoundException">
+            <summary>
+            Thrown if a certificate template cannot be found by OID in the Active Directory
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateOidNotFoundException.#ctor(System.String)">
+            <summary>
+            CertificateTemplateOidNotFoundException Constructor 1
+            </summary>
+            <param name="oid"></param>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateOidNotFoundException.#ctor">
+            <summary>
+            CertificateTemplateOidNotFoundException Constructor 2
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.CertificateTemplateAccessRuleException">
+            <summary>
+            Thrown if the access rules for a certificate template cannot be successfully retrieved from AD.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.CertificateTemplateAccessRuleException.#ctor(EasyPKIView.CertificateTemplates.AdcsCertificateTemplate,System.Exception)">
+            <summary>
+            CertificateTemplateAccessRuleException constructor
+            </summary>
+            <param name="template">An ADCertificateTemplate object</param>
+            <param name="ex">The exception that occured while doing the Access Rule check</param>
+        </member>
+        <member name="T:EasyPKIView.CertificationAuthorityNotFoundException">
+            <summary>
+            Thrown if a Certification Authority cannot be found in the Active Directory
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.IAdcsDirectoryEntry">
+            <summary>
+            Describes an entry in the Public Key Services container of Active Directory
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.TransientId">
+            <summary>
+            The unique ID of this entry in the collection
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.ObjectType">
+            <summary>
+            The type of ADCS Object
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.Name">
+            <summary>
+            The Name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.DisplayName">
+            <summary>
+            The Display name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.DistinguishedName">
+            <summary>
+            The Distinguished Name attribute of the directory entry
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.WhenCreated">
+            <summary>
+            Indicates when the directory entry was created
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.WhenChanged">
+            <summary>
+            Indicates when the directory entry was last modified
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.IAdcsDirectoryEntry.Guid">
+            <summary>
+            The unique GUID of the directory entry
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.PublicKeyServices">
+            <summary>
+            The public key services container contents from the current Active Directory forest
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.PublicKeyServices.CertificateTemplates">
+            <summary>
+            The list of certificate templates published in the Active Directory forest
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.PublicKeyServices.EnrollmentServices">
+            <summary>
+            The list of enrollment services (online CAs) published in the Active Directory forest.
+            </summary>
+        </member>
+        <member name="M:EasyPKIView.PublicKeyServices.GetFromActiveDirectory">
+            <summary>
+            Gets the collection of certificate templates and enrollment services objects published in the Active Directory forest.
+            </summary>
+            <returns>the collection of certificate templates and enrollment services objects published in the Active Directory forest.</returns>
+        </member>
+        <member name="T:EasyPKIView.X509ExtensionOid">
+            <summary>
+            The OIDs of well-known X509 extensions.
+            </summary>
+        </member>
+    </members>
+</doc>

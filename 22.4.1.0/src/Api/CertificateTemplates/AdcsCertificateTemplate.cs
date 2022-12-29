@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.DirectoryServices;
-using System.Linq;
+﻿using System.DirectoryServices;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+using EasyPKIView.EnrollmentServices;
 
-namespace EasyPKIView {
+namespace EasyPKIView.CertificateTemplates {
+    /// <summary>
+    /// ADCS Certificate Template
+    /// </summary>
     public class AdcsCertificateTemplate : AdcsDirectoryEntry {
         static readonly Dictionary<String, EnhancedKeyUsageFlags> _enhancedKeyUsageMap = new Dictionary<String, EnhancedKeyUsageFlags>() {
             {"1.3.6.1.4.1.311.10.12.1"  , EnhancedKeyUsageFlags.Any},
@@ -57,11 +55,15 @@ namespace EasyPKIView {
             if (ObjectType == AdcsObjectType.None) {
                 throw new CertificateTemplateNotFoundException();
             }
+
+            setProperties();
         }
-        public AdcsCertificateTemplate(String name) : base(AdcsObjectType.CertificateTemplate, LdapUrls.GetCertificateTemplateLdapUrl(name)) {
+        public AdcsCertificateTemplate(String name) : base(AdcsObjectType.CertificateTemplate, PublicKeyServicesContainerHelper.GetCertificateTemplateLdapUrl(name)) {
             if (ObjectType == AdcsObjectType.CertificateTemplate) {
                 throw new CertificateTemplateNotFoundException(name);
             }
+
+            setProperties();
         }
         /// <summary>
         /// The object ID of the certificate template
@@ -79,22 +81,19 @@ namespace EasyPKIView {
         /// The certificate template version. Version 1 = Compatible with Windows 2000 and up, Version 2 = WS2003 and up, and so on.
         /// </summary>
         public Int32 SchemaVersion { get; set; }
+
         /// <summary>
         /// The list of key usages asserted by certificates issued using this certificate template
         /// </summary>
-        public X509KeyUsageFlags KeyUsages { get; set; }
+        public KeyUsageExtension KeyUsages { get; set; } = new KeyUsageExtension();
         /// <summary>
         /// The enhanced key usages asserted by the certificate template
         /// </summary>
-        public EnhancedKeyUsageFlags EnhancedKeyUsages { get; set; } = EnhancedKeyUsageFlags.None;
+        public EnhancedKeyUsageExtension EnhancedKeyUsages { get; set; } = new EnhancedKeyUsageExtension();
         /// <summary>
         /// Critical extensions asserted by the template
         /// </summary>
-        public List<Oid> CriticalExtensions { get; set; }
-        /// <summary>
-        /// Enhanced key usages which are custom to the current Active Directory Forest
-        /// </summary>
-        public List<String> CustomEnahncedKeyUsages { get; set; } = new List<String>();
+        public List<Oid> CriticalExtensions { get; set; } = new List<Oid>();
         /// <summary>
         /// The number of certificate request agents a certificate request must be signed by in order to obtain a certificate using this template
         /// </summary>
@@ -119,7 +118,9 @@ namespace EasyPKIView {
         /// Certificate template subject name flags
         /// </summary>
         public CertificateTemplateNameFlags SubjectNameFlags { get; set; }
-
+        /// <summary>
+        /// Certificate Template Enrollment flags
+        /// </summary>
         public CertificateTemplateEnrollmentFlags EnrollmentFlags { get; set; }
         /// <summary>
         /// Key attestation methods
@@ -139,7 +140,13 @@ namespace EasyPKIView {
         /// See https://tinyurl.com/y25l2h8p for more details.
         /// </summary>
         public Boolean RequiresStrongKeyProtection { get; set; }
-
+        /// <summary>
+        /// If true, the template requires that the enrollee supply the subject information in the certificate request
+        /// </summary>
+        public Boolean IsOffline { get; set; }
+        /// <summary>
+        /// Indicates whether or how key attestation is enforced by the template
+        /// </summary>
         public KeyAttestationEnforcement KeyAttestationEnforcement { get; set; }
         /// <summary>
         /// Indicates whether this certificate template requires the CA to assert a TPM Key Attestation issuance policy OID on issued certificates
@@ -156,47 +163,57 @@ namespace EasyPKIView {
         /// <summary>
         /// The transient Ids of the issuing CAs to which this template is assigned.
         /// </summary>
-        public List<Guid> AssignedEnrollmentServices;
-
+        public List<Guid> AssignedEnrollmentServices = new();
         /// <summary>
         /// The collection of AD identity principals that have rights on the certificate template along with the specification of what those rights are
         /// </summary>
         public Dictionary<String, CertificateTemplateAccessFlags> AccessRules { get; set; } = new Dictionary<String, CertificateTemplateAccessFlags>();
-
-        void setEnhancedKeyUsageFlags() {
-            Object[] ekus = (Object[])DirEntry.Properties[DsPropertyIndex.EKU]?.Value;
-            if (ekus is null) {
+        /// <summary>
+        /// Sets the list of ids of enrollment services to which this template is assigned.
+        /// </summary>
+        /// <param name="enrollmentServices"></param>
+        public void SetAssignedEnrollmentServices(List<AdcsEnrollmentService> enrollmentServices) {
+            if (enrollmentServices is null) {
                 return;
             }
 
-            foreach (Object eku in ekus) {
-                var oid = (String)eku;
-                if (_enhancedKeyUsageMap.ContainsKey(oid)) {
-                    EnhancedKeyUsages |= _enhancedKeyUsageMap[oid];
-                } else {
-                    CustomEnahncedKeyUsages.Add(oid);
-                }
+            AssignedEnrollmentServices = enrollmentServices.Where(e => e.PublishedCertificateTemplates.Contains(Name))
+                .Select(e => e.TransientId).ToList();
+        }
+        /// <summary>
+        /// Gets the list of enrollment services to which this template is assigned.
+        /// </summary>
+        /// <param name="enrollmentServices">The list of enrollment services published in Active Directory.</param>
+        /// <returns>The list of enrollment services to which this template is assigned.</returns>
+        public List<AdcsEnrollmentService> GetAssignedEnrollmentServices(List<AdcsEnrollmentService> enrollmentServices) {
+            return enrollmentServices.Where(e => AssignedEnrollmentServices.Contains(e.TransientId)).ToList();
+        }
+
+        void setProperties() {
+            if (ObjectType == AdcsObjectType.None) {
+                return;
             }
+            setPropertiesFromDirectoryObject();
+            setAccessRules();
+            setCalculatedProperties();
         }
-
         void setPropertiesFromDirectoryObject() {
-            SchemaVersion = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.Version].Value);
-            KeyUsages = (X509KeyUsageFlags)DirEntry.Properties[DsPropertyIndex.KeyUsage].Value;
-            RASignaturesRequired = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.RASignaturesRequired].Value);
-            MinimumPublicKeyLength = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.MinimumKeySize].Value);
-            Oid = DirEntry.Properties[DsPropertyIndex.OID].Value.ToString();
-            ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyIndex.ValidityPeriod].Value).ToTimeSpan();
-            GeneralFlags = ((CertificateTemplateFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateGeneralFlags].Value);
-            SubjectNameFlags = ((CertificateTemplateNameFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateSubjectNameFlags].Value);
-            EnrollmentFlags = ((CertificateTemplateEnrollmentFlags)DirEntry.Properties[DsPropertyIndex.CertTemplateEnrollmentFlags].Value);
+            SchemaVersion = Convert.ToInt32(DirEntry.Properties[DsPropertyName.Version].Value);
+            RASignaturesRequired = Convert.ToInt32(DirEntry.Properties[DsPropertyName.RASignaturesRequired].Value);
+            MinimumPublicKeyLength = Convert.ToInt32(DirEntry.Properties[DsPropertyName.MinimumKeySize].Value);
+            Oid = DirEntry.Properties[DsPropertyName.OID].Value.ToString();
+            ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyName.ValidityPeriod].Value).ToTimeSpan();
+            GeneralFlags = (CertificateTemplateFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateGeneralFlags].Value);
+            SubjectNameFlags = (CertificateTemplateNameFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateSubjectNameFlags].Value);
+            EnrollmentFlags = (CertificateTemplateEnrollmentFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateEnrollmentFlags].Value);
         }
-
         void setCalculatedProperties() {
-            MajorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.CertTemplateMajorRevision].Value);
-            MinorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyIndex.CertTemplateMinorRevision].Value);
+            MajorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateMajorRevision].Value);
+            MinorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateMinorRevision].Value);
             KeyArchivalRequired = (PrivateKeyFlags & PrivateKeyFlags.RequireKeyArchival) > 0;
             ExportablePrivateKey = (PrivateKeyFlags & PrivateKeyFlags.AllowKeyExport) > 0;
             RequiresStrongKeyProtection = (PrivateKeyFlags & PrivateKeyFlags.RequireStrongProtection) > 0;
+            IsOffline = (SubjectNameFlags & CertificateTemplateNameFlags.EnrolleeSuppliesSubject) > 0;
             if ((PrivateKeyFlags & PrivateKeyFlags.AttestationRequired) > 0) {
                 KeyAttestationEnforcement = KeyAttestationEnforcement.Required;
             } else if ((PrivateKeyFlags & PrivateKeyFlags.AttestationPreferred) > 0) {
@@ -216,8 +233,55 @@ namespace EasyPKIView {
 
                 AssertsKeyAttestationPolicy = (PrivateKeyFlags & PrivateKeyFlags.AttestationWithoutPolicy) == 0;
             }
+            setCriticalExtensions();
+            setKeyUsagesExtension();
+            setEnhancedKeyUsageExtension();
             setMinimumSupportedClient();
             setMinimumSupportedServer();
+        }
+        void setCriticalExtensions() {
+            var criticalExtensionOids = GetMultiStringAttribute(DsPropertyName.CertTemplateCriticalExtensions);
+            if (criticalExtensionOids is null) {
+                return;
+            }
+
+            foreach (String criticalExtensionOid in criticalExtensionOids) {
+                CriticalExtensions.Add(new Oid(criticalExtensionOid));
+            }
+        }
+        void setKeyUsagesExtension() {
+            var keyUsageBytes = (Byte[])DirEntry.Properties[DsPropertyName.KeyUsage].Value;
+            if (keyUsageBytes is null) {
+                return;
+            }
+            var keyUsageInt = keyUsageBytes.ToInt32();
+            var keyUsageFlags = (X509KeyUsageFlags)keyUsageInt;
+            KeyUsages = new KeyUsageExtension(keyUsageFlags) {
+                IsCritical = CriticalExtensions.Select(p => p.Value).Contains(X509ExtensionOid.KeyUsage)
+            };
+        }
+        void setEnhancedKeyUsageExtension() {
+            Object[] ekus = (Object[])DirEntry.Properties[DsPropertyName.EKU]?.Value;
+            if (ekus is null) {
+                return;
+            }
+
+            var ekuFlags = EnhancedKeyUsageFlags.None;
+            var customEkus = new List<String>();
+
+            foreach (Object eku in ekus) {
+                var oid = (String)eku;
+                if (_enhancedKeyUsageMap.ContainsKey(oid)) {
+                    ekuFlags |= _enhancedKeyUsageMap[oid];
+                } else {
+                    customEkus.Add(oid);
+                }
+            }
+
+            EnhancedKeyUsages = new EnhancedKeyUsageExtension(ekuFlags) {
+                Custom = customEkus,
+                IsCritical = CriticalExtensions.Select(p => p.Value).Contains(X509ExtensionOid.EnhancedKeyUsage)
+            };
         }
         void setMinimumSupportedClient() {
             const Int32 mask = 0x0F000000;
@@ -237,9 +301,9 @@ namespace EasyPKIView {
         String getLegacyClientSupport() {
             return SchemaVersion switch {
                 1 => "Windows 2000",
-                2 => "Windows XP",
-                3 => "Windows Vista",
-                4 => "Windows 8",
+                2 => "Windows XP / Windows Server 2003",
+                3 => "Windows Vista / Windows Server 2008",
+                4 => "Windows 8 / Windows Server 2012",
                 _ => "Unknown"
             };
         }
@@ -271,6 +335,9 @@ namespace EasyPKIView {
             try {
                 ActiveDirectorySecurity sd = DirEntry.ObjectSecurity;
                 foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount))) {
+                    if (rule.AccessControlType == AccessControlType.Deny) {
+                        continue;
+                    }
                     String identity = rule.IdentityReference?.ToString();
                     if (identity is null) {
                         continue;
@@ -310,6 +377,25 @@ namespace EasyPKIView {
 
             if ((rights & ActiveDirectoryRights.GenericWrite) > 0) {
                 retValue |= CertificateTemplateAccessFlags.Write;
+            }
+
+            return retValue;
+        }
+
+        /// <summary>
+        /// Gets all certificate templates which exist in the current Active Directory forest.
+        /// </summary>
+        /// <returns>A list of certificate templates</returns>
+        public static List<AdcsCertificateTemplate> GetAllFromDirectory() {
+            var retValue = new List<AdcsCertificateTemplate>();
+            using DirectoryEntry templatesContainer = new DirectoryEntry(PublicKeyServicesContainerHelper.CertificateTemplatesContainerUrl);
+            foreach (DirectoryEntry dEntry in templatesContainer.Children) {
+                try {
+                    var currentTemplate = new AdcsCertificateTemplate(dEntry);
+                    retValue.Add(currentTemplate);
+                } catch (CertificateTemplateNotFoundException) {
+                    //This directory entry is not a certificate template.
+                }
             }
 
             return retValue;

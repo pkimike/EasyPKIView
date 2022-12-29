@@ -21,7 +21,7 @@ namespace EasyPKIView
             setFieldsFromDirectoryEntry(objectType, dEntry);
         }
 
-        public AdcsDirectoryEntry(AdcsObjectType objectType, String ldapURL) : this(objectType, new DirectoryEntry(ldapURL)) { }
+        protected AdcsDirectoryEntry(AdcsObjectType objectType, String ldapURL) : this(objectType, new DirectoryEntry(ldapURL)) { }
 
         public Guid TransientId { get; set; }
         public AdcsObjectType ObjectType { get; set; }
@@ -34,13 +34,28 @@ namespace EasyPKIView
 
         protected DirectoryEntry DirEntry { get; set; }
 
+        protected virtual List<String> GetMultiStringAttribute(String propertyName) {
+            Object[] elements;
+
+            try {
+                elements = (Object[])DirEntry.Properties[propertyName].Value;
+            } catch {
+                //If there's only a single entry, it won't cast as an array.
+                elements = new[] { DirEntry.Properties[propertyName].Value };
+            }
+
+            return elements is null 
+                ? new List<String>() 
+                : elements.Select(item => item.ToString()).ToList();
+        }
+
         void setFieldsFromDirectoryEntry(AdcsObjectType expectedObjectType, DirectoryEntry dEntry) {
             if (dEntry is null) {
                 ObjectType = AdcsObjectType.None;
                 return;
             }
 
-            var objectClass = (Object[])dEntry.Properties[DsPropertyIndex.ObjectClass]?.Value;
+            var objectClass = (Object[])dEntry.Properties[DsPropertyName.ObjectClass]?.Value;
             if (objectClass is null || objectClass.Length < 2 || !objectClass[1].ToString().Equals(expectedObjectType.AsString(), StringComparison.InvariantCultureIgnoreCase))
             {
                 ObjectType = AdcsObjectType.None;
@@ -48,18 +63,18 @@ namespace EasyPKIView
             }
 
             DirEntry = dEntry;
-            Name = DirEntry.Properties[DsPropertyIndex.Name].Value?.ToString() ?? String.Empty;
-            DisplayName = DirEntry.Properties[DsPropertyIndex.DisplayName].Value?.ToString() ?? String.Empty;
-            DistinguishedName = DirEntry.Properties[DsPropertyIndex.DistinguishedName].Value?.ToString() ?? String.Empty;
-            Guid = new Guid((byte[])DirEntry.Properties[DsPropertyIndex.ObjectGUID]?.Value);
+            Name = DirEntry.Properties[DsPropertyName.Name].Value?.ToString() ?? String.Empty;
+            DisplayName = DirEntry.Properties[DsPropertyName.DisplayName].Value?.ToString() ?? String.Empty;
+            DistinguishedName = DirEntry.Properties[DsPropertyName.DistinguishedName].Value?.ToString() ?? String.Empty;
+            Guid = new Guid((byte[])DirEntry.Properties[DsPropertyName.ObjectGUID]?.Value);
 
             try {
-                WhenCreated = (DateTime)DirEntry.Properties[DsPropertyIndex.WhenCreated].Value;
+                WhenCreated = (DateTime)DirEntry.Properties[DsPropertyName.WhenCreated].Value;
             } catch {
                 WhenCreated = DateTime.MinValue;
             }
             try {
-                WhenChanged = (DateTime)DirEntry.Properties[DsPropertyIndex.WhenChanged].Value;
+                WhenChanged = (DateTime)DirEntry.Properties[DsPropertyName.WhenChanged].Value;
             } catch {
                 WhenChanged = DateTime.MinValue;
             }

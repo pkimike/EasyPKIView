@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPkiView", "src\Api\EasyPkiView.csproj", "{C1367A71-C84C-4637-B544-0198866D80CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyPkiView", "src\Api\EasyPkiView.csproj", "{C1367A71-C84C-4637-B544-0198866D80CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEasyPkiView", "src\TestApp\TestEasyPkiView.csproj", "{C1650290-2199-4733-8F09-1F346F332830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C1367A71-C84C-4637-B544-0198866D80CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1367A71-C84C-4637-B544-0198866D80CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1367A71-C84C-4637-B544-0198866D80CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1650290-2199-4733-8F09-1F346F332830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1650290-2199-4733-8F09-1F346F332830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1650290-2199-4733-8F09-1F346F332830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1650290-2199-4733-8F09-1F346F332830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

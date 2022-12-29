@@ -28,9 +28,13 @@
 		<DocumentationFile>EasyPkiView_Api.xml</DocumentationFile>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>10</LangVersion>
+	</PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="System.DirectoryServices" Version="7.0.0" />
+	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 
 </Project>

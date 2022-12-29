@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EasyPKIView {
-    static class DsPropertyIndex {
+    static class DsPropertyName {
         internal const String OID                            = "msPKI-Cert-Template-OID";
         internal const String Version                        = "msPKI-Template-Schema-Version";
         internal const String EKU                            = "pKIExtendedKeyUsage";

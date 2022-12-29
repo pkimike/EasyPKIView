@@ -14,5 +14,14 @@
             period /= -10000000;
             return TimeSpan.FromSeconds(period);
         }
+
+        internal static Int32 ToInt32(this Byte[] bytes) {
+            Console.WriteLine($"Bytes: {BitConverter.ToString(bytes)}");
+            if (BitConverter.IsLittleEndian) {
+                Array.Reverse(bytes);
+            }
+
+            return BitConverter.ToInt32(bytes, 0);
+        }
     }
 }

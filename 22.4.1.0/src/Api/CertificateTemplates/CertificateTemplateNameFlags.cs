@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyPKIView {
+﻿namespace EasyPKIView.CertificateTemplates {
     /// <summary>
     /// Defines flags that determine how certificate subject is constructed.
     /// <para>This enumeration has a <see cref="FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>

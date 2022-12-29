@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyPKIView;
+﻿namespace EasyPKIView.CertificateTemplates;
 
 /// <summary>
 /// Defines flags that determine how certificate subject is constructed.
@@ -13,7 +7,7 @@ namespace EasyPKIView;
 [Flags]
 public enum EnhancedKeyUsageFlags : Int64 {
     /// <summary>
-    /// None
+    /// None.
     /// </summary>
     None = 0,
     /// <summary>
