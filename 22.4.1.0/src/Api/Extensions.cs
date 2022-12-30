@@ -1,11 +1,12 @@
 ﻿namespace EasyPKIView {
 
     static class Extensions {
-        internal static String AsString(this AdcsObjectType objectType) {
+        internal static String GetObjectClassName(this AdcsObjectType objectType) {
             return objectType switch {
-                AdcsObjectType.EnrollmentService => "pKIEnrollmentService",
+                AdcsObjectType.EnrollmentService   => "pKIEnrollmentService",
                 AdcsObjectType.CertificateTemplate => "pKICertificateTemplate",
-                _ => "None"
+                AdcsObjectType.Oid                 => "msPKI-Enterprise-Oid",
+                _                                  => "None"
             };
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EasyPKIView.AdcsOids;
 using EasyPKIView.CertificateTemplates;
 using EasyPKIView.EnrollmentServices;
 
@@ -20,6 +21,10 @@ public class PublicKeyServices {
     /// The list of enrollment services (online CAs) published in the Active Directory forest.
     /// </summary>
     public List<AdcsEnrollmentService> EnrollmentServices { get; set; } = new();
+    /// <summary>
+    /// The list of ADCS OIDs published in the Active Directory forest
+    /// </summary>
+    public List<AdcsOid> Oids { get; set; } = new();
 
     /// <summary>
     /// Gets the collection of certificate templates and enrollment services objects published in the Active Directory forest.
@@ -28,10 +33,15 @@ public class PublicKeyServices {
     public static PublicKeyServices GetFromActiveDirectory() {
         var retValue = new PublicKeyServices {
             CertificateTemplates = AdcsCertificateTemplate.GetAllFromDirectory(),
-            EnrollmentServices = AdcsEnrollmentService.GetAllFromDirectory()
+            EnrollmentServices = AdcsEnrollmentService.GetAllFromDirectory(),
+            Oids = AdcsOid.GetAllFromDirectory()
         };
 
         retValue.CertificateTemplates.ForEach(t => t.SetAssignedEnrollmentServices(retValue.EnrollmentServices));
+        List<AdcsOid> customEkus = retValue.Oids.Where(o => o.OidType == AdcsOidType.EnhancedKeyUsage).ToList();
+        if (customEkus.Any()) {
+            retValue.CertificateTemplates.ForEach(t => t.EnhancedKeyUsages.Custom.ForEach(c => c.TryDefineFriendlyName(customEkus)));
+        }
 
         return retValue;
     }

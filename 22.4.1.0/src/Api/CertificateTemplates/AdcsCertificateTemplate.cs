@@ -53,18 +53,14 @@ namespace EasyPKIView.CertificateTemplates {
         public AdcsCertificateTemplate() { }
 
         public AdcsCertificateTemplate(DirectoryEntry dEntry) : base(AdcsObjectType.CertificateTemplate, dEntry) {
-            if (ObjectType == AdcsObjectType.None) {
-                throw new CertificateTemplateNotFoundException();
+            if (ObjectType == AdcsObjectType.CertificateTemplate) {
+                setProperties();
             }
-
-            setProperties();
         }
         public AdcsCertificateTemplate(String name) : base(AdcsObjectType.CertificateTemplate, PublicKeyServicesContainerHelper.GetCertificateTemplateLdapUrl(name)) {
             if (ObjectType == AdcsObjectType.CertificateTemplate) {
-                throw new CertificateTemplateNotFoundException(name);
+                setProperties();
             }
-
-            setProperties();
         }
         /// <summary>
         /// The object ID of the certificate template
@@ -268,13 +264,13 @@ namespace EasyPKIView.CertificateTemplates {
             }
 
             var ekuFlags = EnhancedKeyUsageFlags.None;
-            var customEkus = new List<String>();
+            var customEkus = new List<OidDto>();
 
-            foreach (String oid in ekus) {
-                if (_enhancedKeyUsageMap.ContainsKey(oid)) {
-                    ekuFlags |= _enhancedKeyUsageMap[oid];
+            foreach (String oidValue in ekus) {
+                if (_enhancedKeyUsageMap.ContainsKey(oidValue)) {
+                    ekuFlags |= _enhancedKeyUsageMap[oidValue];
                 } else {
-                    customEkus.Add(oid);
+                    customEkus.Add(new OidDto(oidValue));
                 }
             }
 
@@ -333,7 +329,6 @@ namespace EasyPKIView.CertificateTemplates {
         }
         void setAccessRules() {
             try {
-                Console.WriteLine($"Current Template: {Name}");
                 ActiveDirectorySecurity sd = DirEntry.ObjectSecurity;
                 var denyRules = new List<(String, ActiveDirectoryAccessRule)>();
                 foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount))) {
@@ -396,16 +391,16 @@ namespace EasyPKIView.CertificateTemplates {
         public static List<AdcsCertificateTemplate> GetAllFromDirectory() {
             var retValue = new List<AdcsCertificateTemplate>();
             using DirectoryEntry templatesContainer = new DirectoryEntry(PublicKeyServicesContainerHelper.CertificateTemplatesContainerUrl);
-            foreach (DirectoryEntry dEntry in templatesContainer.Children) {
-                try {
-                    var currentTemplate = new AdcsCertificateTemplate(dEntry);
-                    retValue.Add(currentTemplate);
-                } catch (CertificateTemplateNotFoundException) {
-                    //This directory entry is not a certificate template.
-                }
+            if (templatesContainer?.Children is null) {
+                return new List<AdcsCertificateTemplate>();
             }
 
-            return retValue;
+            return (from DirectoryEntry dEntry
+                    in templatesContainer.Children
+                    select new AdcsCertificateTemplate(dEntry)
+                    into template
+                    where template.ObjectType == AdcsObjectType.CertificateTemplate 
+                    select template).ToList();
         }
     }
 }

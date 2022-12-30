@@ -10,11 +10,13 @@ namespace EasyPKIView {
         static readonly Exception _exception;
         static readonly String _certificateTemplatesContainer;
         static readonly String _enrollmentServicesContainer;
+        static readonly String _oidContainer;
         static readonly String _domainController;
 
 
         public static readonly String CertificateTemplatesContainerUrl;
         public static readonly String EnrollmentServicesContainerUrl;
+        public static readonly String OidContainerUrl;
 
 
         static PublicKeyServicesContainerHelper() {
@@ -24,9 +26,10 @@ namespace EasyPKIView {
                 var publicKeyServicesContainer = $"CN=Public Key Services,CN=Services,CN=Configuration,{forestRootDn}";
                 _certificateTemplatesContainer = $"CN=Certificate Templates,{publicKeyServicesContainer}";
                 _enrollmentServicesContainer = $"CN=Enrollment Services, {publicKeyServicesContainer}";
+                _oidContainer = $"CN=OID, {publicKeyServicesContainer}";
                 CertificateTemplatesContainerUrl = $"LDAP://{_domainController}/{_certificateTemplatesContainer}";
-                EnrollmentServicesContainerUrl = $"CN=Enrollment Services,{publicKeyServicesContainer}";
                 EnrollmentServicesContainerUrl = $"LDAP://{_domainController}/{_enrollmentServicesContainer}";
+                OidContainerUrl = $"LDAP://{_domainController}/{_oidContainer}";
             } catch (Exception e) {
                 _exception = e;
             }
@@ -45,6 +48,13 @@ namespace EasyPKIView {
             }
 
             return $"LDAP://{_domainController}/CN={name},{_enrollmentServicesContainer}";
+        }
+        public static String GetOidLdapUrl(String name) {
+            if (_exception != null) {
+                throw new ApplicationException("Failed to connect to the Active Directory", _exception);
+            }
+
+            return $"LDAP://{_domainController}/CN={name},{_oidContainer}";
         }
 
         static String getDomainController() {

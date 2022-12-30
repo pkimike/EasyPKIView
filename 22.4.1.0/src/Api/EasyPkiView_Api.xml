@@ -24,6 +24,36 @@
             Certificate Template.
             </summary>
         </member>
+        <member name="F:EasyPKIView.AdcsObjectType.Oid">
+            <summary>
+            ADCS OID.
+            </summary>
+        </member>
+        <member name="T:EasyPKIView.AdcsOids.AdcsOidType">
+            <summary>
+            ADCS OID type enumeration
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsOids.AdcsOidType.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsOids.AdcsOidType.CertificateTemplate">
+            <summary>
+            Certificate Template.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsOids.AdcsOidType.CertificatePolicy">
+            <summary>
+            Certificate Policy.
+            </summary>
+        </member>
+        <member name="F:EasyPKIView.AdcsOids.AdcsOidType.EnhancedKeyUsage">
+            <summary>
+            Enhanced Key Usage
+            </summary>
+        </member>
         <member name="T:EasyPKIView.CertificateTemplates.AdcsCertificateTemplate">
             <summary>
             ADCS Certificate Template
@@ -1126,6 +1156,13 @@
             The unique GUID of the directory entry
             </summary>
         </member>
+        <member name="M:EasyPKIView.OidDto.TryDefineFriendlyName(System.Collections.Generic.List{EasyPKIView.AdcsOids.AdcsOid})">
+            <summary>
+            Attempts to find a matching OID from the Public Key Services container
+            where the OID value matches this custom OID value
+            </summary>
+            <param name="adcsOids">List of AdcsOids</param>
+        </member>
         <member name="T:EasyPKIView.PublicKeyServices">
             <summary>
             The public key services container contents from the current Active Directory forest
@@ -1139,6 +1176,11 @@
         <member name="P:EasyPKIView.PublicKeyServices.EnrollmentServices">
             <summary>
             The list of enrollment services (online CAs) published in the Active Directory forest.
+            </summary>
+        </member>
+        <member name="P:EasyPKIView.PublicKeyServices.Oids">
+            <summary>
+            The list of ADCS OIDs published in the Active Directory forest
             </summary>
         </member>
         <member name="M:EasyPKIView.PublicKeyServices.GetFromActiveDirectory">

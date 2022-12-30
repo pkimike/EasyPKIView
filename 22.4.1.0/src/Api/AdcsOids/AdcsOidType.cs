@@ -4,26 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyPKIView; 
+namespace EasyPKIView.AdcsOids;
 
 /// <summary>
-/// ADCS Directory Object type.
+/// ADCS OID type enumeration
 /// </summary>
-public enum AdcsObjectType {
+public enum AdcsOidType {
     /// <summary>
-    /// Not an ADCS directory object.
+    /// None.
     /// </summary>
     None                = 0,
     /// <summary>
-    /// Enrollment service (online CA).
-    /// </summary>
-    EnrollmentService   = 1,
-    /// <summary>
     /// Certificate Template.
     /// </summary>
-    CertificateTemplate = 2,
+    CertificateTemplate = 1,
     /// <summary>
-    /// ADCS OID.
+    /// Certificate Policy.
     /// </summary>
-    Oid = 3
+    CertificatePolicy   = 2,
+    /// <summary>
+    /// Enhanced Key Usage
+    /// </summary>
+    EnhancedKeyUsage    = 3
 }

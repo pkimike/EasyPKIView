@@ -18,6 +18,7 @@ namespace EasyPKIView {
         internal const String MinimumKeySize                 = "msPKI-Minimal-Key-Size";
         internal const String RASignaturesRequired           = "msPKI-RA-Signature";
         internal const String ObjectClass                    = "objectClass";
+        internal const String ObjectCategory                 = "objectCategory";
         internal const String CACertificate                  = "cACertificate";
         internal const String DistinguishedName              = "distinguishedName";
         internal const String Flags                          = "flags";

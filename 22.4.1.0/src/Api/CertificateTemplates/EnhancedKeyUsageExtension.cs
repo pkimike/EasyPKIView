@@ -19,5 +19,5 @@ public class EnhancedKeyUsageExtension : CertificateTemplateExtension<EnhancedKe
     /// <summary>
     /// The list of custom enhanced key usage OIDs.
     /// </summary>
-    public List<String> Custom { get; set; } = new List<String>();
+    public List<OidDto> Custom { get; set; } = new List<OidDto>();
 }

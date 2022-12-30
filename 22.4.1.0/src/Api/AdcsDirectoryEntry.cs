@@ -11,17 +11,18 @@ namespace EasyPKIView
     public abstract class AdcsDirectoryEntry : IAdcsDirectoryEntry
     {
         protected AdcsDirectoryEntry() { }
-
-        protected AdcsDirectoryEntry(AdcsObjectType objectType) {
+        protected AdcsDirectoryEntry(AdcsObjectType expectedObjectType, DirectoryEntry dEntry) {
             TransientId = Guid.NewGuid();
-            ObjectType = objectType;
+            DirEntry = dEntry;
+            if (!GetMultiStringAttribute(DsPropertyName.ObjectClass).Contains(expectedObjectType.GetObjectClassName())) {
+                ObjectType = AdcsObjectType.None;
+                return;
+            }
+            ObjectType = expectedObjectType;
+            setFieldsFromDirectoryEntry(expectedObjectType, dEntry);
         }
 
-        protected AdcsDirectoryEntry(AdcsObjectType objectType, DirectoryEntry dEntry) : this(objectType) {
-            setFieldsFromDirectoryEntry(objectType, dEntry);
-        }
-
-        protected AdcsDirectoryEntry(AdcsObjectType objectType, String ldapURL) : this(objectType, new DirectoryEntry(ldapURL)) { }
+        protected AdcsDirectoryEntry(AdcsObjectType expectedObjectType, String ldapURL) : this(expectedObjectType, new DirectoryEntry(ldapURL)) { }
 
         public Guid TransientId { get; set; }
         public AdcsObjectType ObjectType { get; set; }
@@ -61,6 +62,18 @@ namespace EasyPKIView
                 : elements.Select(item => item.ToString()).ToList();
         }
 
+        Boolean testObjectClass(DirectoryEntry dEntry, AdcsObjectType expectedObjectType) {
+            String objectCategory = dEntry.Properties[DsPropertyName.ObjectCategory]?.Value?.ToString();
+            if (String.IsNullOrEmpty(objectCategory)) {
+                return false;
+            }
+            String[] parts = objectCategory.Split('=');
+            if (parts.Length < 2) {
+                return false;
+            }
+
+            return parts[1].Split(',')[0].Equals(expectedObjectType.GetObjectClassName());
+        }
         void setFieldsFromDirectoryEntry(AdcsObjectType expectedObjectType, DirectoryEntry dEntry) {
             if (dEntry is null) {
                 ObjectType = AdcsObjectType.None;
@@ -68,13 +81,12 @@ namespace EasyPKIView
             }
 
             var objectClass = (Object[])dEntry.Properties[DsPropertyName.ObjectClass]?.Value;
-            if (objectClass is null || objectClass.Length < 2 || !objectClass[1].ToString().Equals(expectedObjectType.AsString(), StringComparison.InvariantCultureIgnoreCase))
+            if (objectClass is null || objectClass.Length < 2 || !objectClass[1].ToString().Equals(expectedObjectType.GetObjectClassName(), StringComparison.InvariantCultureIgnoreCase))
             {
                 ObjectType = AdcsObjectType.None;
                 return;
             }
 
-            DirEntry = dEntry;
             Name = DirEntry.Properties[DsPropertyName.Name].Value?.ToString() ?? String.Empty;
             DisplayName = DirEntry.Properties[DsPropertyName.DisplayName].Value?.ToString() ?? String.Empty;
             DistinguishedName = DirEntry.Properties[DsPropertyName.DistinguishedName].Value?.ToString() ?? String.Empty;

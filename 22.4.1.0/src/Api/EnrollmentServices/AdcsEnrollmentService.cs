@@ -21,14 +21,18 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
     /// </summary>
     /// <param name="name">A CA common name.</param>
     public AdcsEnrollmentService(String name) : base(AdcsObjectType.EnrollmentService, PublicKeyServicesContainerHelper.GetEnrollmentServiceLdapUrl(name)) {
-        setProperties();
+        if (ObjectType == AdcsObjectType.EnrollmentService) {
+            setProperties();
+        }
     }
     /// <summary>
     /// Accepts the directory entry of an enrollment service.
     /// </summary>
     /// <param name="dEntry">The directory entry of an enrollment service.</param>
     public AdcsEnrollmentService(DirectoryEntry dEntry) : base(AdcsObjectType.EnrollmentService, dEntry) {
-        setProperties();
+        if (ObjectType == AdcsObjectType.EnrollmentService) {
+            setProperties();
+        }
     }
     /// <summary>
     /// Accepts the public certificate of a CA
@@ -98,22 +102,16 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
     }
 
     public static List<AdcsEnrollmentService> GetAllFromDirectory() {
-
         using var container = new DirectoryEntry(PublicKeyServicesContainerHelper.EnrollmentServicesContainerUrl);
         if (container?.Children is null) {
             return new List<AdcsEnrollmentService>();
         }
 
-        var retValue = new List<AdcsEnrollmentService>();
-        foreach (DirectoryEntry dEntry in container.Children) {
-            try {
-                var enrollService = new AdcsEnrollmentService(dEntry);
-                retValue.Add(enrollService);
-            } catch (CertificationAuthorityNotFoundException) {
-                //This directory entry is not a valid enrollment services object.
-            }
-        }
-
-        return retValue;
+        return (from DirectoryEntry dEntry 
+                in container.Children 
+                select new AdcsEnrollmentService(dEntry) 
+                into enrollService 
+                where enrollService.ObjectType == AdcsObjectType.EnrollmentService 
+                select enrollService).ToList();
     }
 }
