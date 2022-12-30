@@ -34,6 +34,18 @@ namespace EasyPKIView
 
         protected DirectoryEntry DirEntry { get; set; }
 
+        protected virtual Int32? GetInt32(String propertyName) {
+            Object? property = DirEntry.Properties[propertyName]?.Value;
+            return property is null
+                ? null
+                : Convert.ToInt32(property);
+        }
+        protected virtual Int32 GetInt32(String propertyName, Int32 defaultValue) {
+            Int32? retValue = GetInt32(propertyName);
+            return retValue.HasValue
+                ? retValue.Value
+                : defaultValue;
+        }
         protected virtual List<String> GetMultiStringAttribute(String propertyName) {
             Object[] elements;
 

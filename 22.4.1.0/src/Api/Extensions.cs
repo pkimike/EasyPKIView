@@ -10,6 +10,9 @@
         }
 
         internal static TimeSpan ToTimeSpan(this Byte[] bytes) {
+            if (bytes is null) {
+                return default;
+            }
             long period = BitConverter.ToInt64(bytes, 0);
             period /= -10000000;
             return TimeSpan.FromSeconds(period);

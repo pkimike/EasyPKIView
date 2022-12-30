@@ -90,7 +90,7 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
 
     void setProperties() {
         Certificate = (Byte[])DirEntry.Properties[DsPropertyName.CACertificate]?.Value;
-        Flags = (EnrollmentServiceFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.Flags]?.Value);
+        Flags = (EnrollmentServiceFlags)GetInt32(DsPropertyName.Flags, 0);
         DnsHostName = DirEntry.Properties[DsPropertyName.DNSHostName].Value.ToString();
         CaCertificateDn = DirEntry.Properties[DsPropertyName.CACertificateDN].Value.ToString();
         PublishedCertificateTemplates = GetMultiStringAttribute(DsPropertyName.CertificateTemplates);

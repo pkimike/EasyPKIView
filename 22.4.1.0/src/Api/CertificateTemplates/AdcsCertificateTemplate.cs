@@ -199,18 +199,18 @@ namespace EasyPKIView.CertificateTemplates {
             setCalculatedProperties();
         }
         void setPropertiesFromDirectoryObject() {
-            SchemaVersion = Convert.ToInt32(DirEntry.Properties[DsPropertyName.Version].Value);
-            RASignaturesRequired = Convert.ToInt32(DirEntry.Properties[DsPropertyName.RASignaturesRequired].Value);
-            MinimumPublicKeyLength = Convert.ToInt32(DirEntry.Properties[DsPropertyName.MinimumKeySize].Value);
-            Oid = DirEntry.Properties[DsPropertyName.OID].Value.ToString();
-            ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyName.ValidityPeriod].Value).ToTimeSpan();
-            GeneralFlags = (CertificateTemplateFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateGeneralFlags].Value);
-            SubjectNameFlags = (CertificateTemplateNameFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateSubjectNameFlags].Value);
-            EnrollmentFlags = (CertificateTemplateEnrollmentFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateEnrollmentFlags].Value);
+            SchemaVersion = GetInt32(DsPropertyName.Version, 0);
+            MajorRevision = GetInt32(DsPropertyName.CertTemplateMajorRevision, 0);
+            MinorRevision = GetInt32(DsPropertyName.CertTemplateMinorRevision, 0);
+            RASignaturesRequired = GetInt32(DsPropertyName.RASignaturesRequired, 0);
+            MinimumPublicKeyLength = GetInt32(DsPropertyName.MinimumKeySize, 0);
+            Oid = DirEntry.Properties[DsPropertyName.OID].Value?.ToString();
+            ValidityPeriod = ((Byte[])DirEntry.Properties[DsPropertyName.ValidityPeriod]?.Value).ToTimeSpan();
+            GeneralFlags = (CertificateTemplateFlags)GetInt32(DsPropertyName.CertTemplateGeneralFlags, 0);
+            SubjectNameFlags = (CertificateTemplateNameFlags)GetInt32(DsPropertyName.CertTemplateSubjectNameFlags, 0);
+            EnrollmentFlags = (CertificateTemplateEnrollmentFlags)GetInt32(DsPropertyName.CertTemplateEnrollmentFlags, 0);
         }
         void setCalculatedProperties() {
-            MajorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateMajorRevision].Value);
-            MinorRevision = Convert.ToInt32(DirEntry.Properties[DsPropertyName.CertTemplateMinorRevision].Value);
             KeyArchivalRequired = (PrivateKeyFlags & PrivateKeyFlags.RequireKeyArchival) > 0;
             ExportablePrivateKey = (PrivateKeyFlags & PrivateKeyFlags.AllowKeyExport) > 0;
             RequiresStrongKeyProtection = (PrivateKeyFlags & PrivateKeyFlags.RequireStrongProtection) > 0;
@@ -241,7 +241,7 @@ namespace EasyPKIView.CertificateTemplates {
             setMinimumSupportedServer();
         }
         void setCriticalExtensions() {
-            var criticalExtensionOids = GetMultiStringAttribute(DsPropertyName.CertTemplateCriticalExtensions);
+            List<String> criticalExtensionOids = GetMultiStringAttribute(DsPropertyName.CertTemplateCriticalExtensions);
             if (criticalExtensionOids is null) {
                 return;
             }
