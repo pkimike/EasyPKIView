@@ -14,12 +14,12 @@ public class PublicKeyServices {
     /// <summary>
     /// The list of certificate templates published in the Active Directory forest
     /// </summary>
-    List<AdcsCertificateTemplate> CertificateTemplates { get; set; } = new();
+    public List<AdcsCertificateTemplate> CertificateTemplates { get; set; } = new();
 
     /// <summary>
     /// The list of enrollment services (online CAs) published in the Active Directory forest.
     /// </summary>
-    List<AdcsEnrollmentService> EnrollmentServices { get; set; } = new();
+    public List<AdcsEnrollmentService> EnrollmentServices { get; set; } = new();
 
     /// <summary>
     /// Gets the collection of certificate templates and enrollment services objects published in the Active Directory forest.

@@ -21,14 +21,14 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
     /// </summary>
     /// <param name="name">A CA common name.</param>
     public AdcsEnrollmentService(String name) : base(AdcsObjectType.EnrollmentService, PublicKeyServicesContainerHelper.GetEnrollmentServiceLdapUrl(name)) {
-        
+        setProperties();
     }
     /// <summary>
     /// Accepts the directory entry of an enrollment service.
     /// </summary>
     /// <param name="dEntry">The directory entry of an enrollment service.</param>
     public AdcsEnrollmentService(DirectoryEntry dEntry) : base(AdcsObjectType.EnrollmentService, dEntry) {
-        
+        setProperties();
     }
     /// <summary>
     /// Accepts the public certificate of a CA
@@ -39,7 +39,7 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
     /// <summary>
     /// The CA's public certificate.
     /// </summary>
-    public X509Certificate2 Certificate { get; set; }
+    public Byte[] Certificate { get; set; }
     /// <summary>
     /// Indicates whether the CA is an enterprise or a standalone CA.
     /// </summary>
@@ -80,18 +80,20 @@ public class AdcsEnrollmentService : AdcsDirectoryEntry {
         return entries.Where(e => PublishedCertificateTemplates.Contains(e.Name)).ToList();
     }
 
-    void setFieldsFromDirectoryEntry() {
-        var certBytes = (Byte[])DirEntry.Properties[DsPropertyName.CACertificate]?.Value;
-        if (certBytes != null) {
-            Certificate = new X509Certificate2(certBytes);
+    public X509Certificate2 GetCACertificate() {
+        if (Certificate is null) {
+            return null;
         }
+
+        return new X509Certificate2(Certificate);
+    }
+
+    void setProperties() {
+        Certificate = (Byte[])DirEntry.Properties[DsPropertyName.CACertificate]?.Value;
         Flags = (EnrollmentServiceFlags)Convert.ToInt32(DirEntry.Properties[DsPropertyName.Flags]?.Value);
         DnsHostName = DirEntry.Properties[DsPropertyName.DNSHostName].Value.ToString();
         CaCertificateDn = DirEntry.Properties[DsPropertyName.CACertificateDN].Value.ToString();
         PublishedCertificateTemplates = GetMultiStringAttribute(DsPropertyName.CertificateTemplates);
-    }
-
-    void setCalculatedFields() {
         IsEnterprise = (Flags & EnrollmentServiceFlags.IsEnterprise) > 0;
     }
 
