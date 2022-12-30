@@ -16,12 +16,11 @@
         }
 
         internal static Int32 ToInt32(this Byte[] bytes) {
-            Console.WriteLine($"Bytes: {BitConverter.ToString(bytes)}");
             if (BitConverter.IsLittleEndian) {
                 Array.Reverse(bytes);
             }
 
-            return BitConverter.ToInt32(bytes, 0);
+            return Convert.ToInt32(String.Join("",bytes.Select(b => $"{b:x2}").ToArray()), 16);
         }
     }
 }
