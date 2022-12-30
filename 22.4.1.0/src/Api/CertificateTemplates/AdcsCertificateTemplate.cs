@@ -332,6 +332,7 @@ namespace EasyPKIView.CertificateTemplates {
         }
         void setAccessRules() {
             try {
+                Console.WriteLine($"Current Template: {Name}");
                 ActiveDirectorySecurity sd = DirEntry.ObjectSecurity;
                 foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount))) {
                     if (rule.AccessControlType == AccessControlType.Deny) {
@@ -354,7 +355,7 @@ namespace EasyPKIView.CertificateTemplates {
         }
         CertificateTemplateAccessFlags getAccessFlag(ActiveDirectoryAccessRule accessRule) {
             ActiveDirectoryRights rights = accessRule.ActiveDirectoryRights;
-            if ((rights & ActiveDirectoryRights.GenericAll) > 0) {
+            if ((rights & ActiveDirectoryRights.GenericAll) == ActiveDirectoryRights.GenericAll) {
                 return CertificateTemplateAccessFlags.FullControl;
             }
 
