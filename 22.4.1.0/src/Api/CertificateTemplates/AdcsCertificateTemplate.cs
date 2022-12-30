@@ -1,4 +1,5 @@
-﻿using System.DirectoryServices;
+﻿using System.Data;
+using System.DirectoryServices;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -334,12 +335,14 @@ namespace EasyPKIView.CertificateTemplates {
             try {
                 Console.WriteLine($"Current Template: {Name}");
                 ActiveDirectorySecurity sd = DirEntry.ObjectSecurity;
+                var denyRules = new List<(String, ActiveDirectoryAccessRule)>();
                 foreach (ActiveDirectoryAccessRule rule in sd.GetAccessRules(true, true, typeof(NTAccount))) {
-                    if (rule.AccessControlType == AccessControlType.Deny) {
-                        continue;
-                    }
                     String identity = rule.IdentityReference?.ToString();
                     if (identity is null) {
+                        continue;
+                    }
+                    if (rule.AccessControlType == AccessControlType.Deny) {
+                        denyRules.Add(new ValueTuple<String, ActiveDirectoryAccessRule>(identity, rule));
                         continue;
                     }
                     CertificateTemplateAccessFlags accessMask = getAccessFlag(rule);
@@ -348,6 +351,10 @@ namespace EasyPKIView.CertificateTemplates {
                     } else {
                         AccessRules.Add(identity, accessMask);
                     }
+                }
+                //Handle any deny rules
+                foreach ((String, ActiveDirectoryAccessRule) denyRule in denyRules.Where(denyRule => AccessRules.ContainsKey(denyRule.Item1))) {
+                    AccessRules[denyRule.Item1] &= getAccessFlag(denyRule.Item2);
                 }
             } catch (Exception ex) {
                 throw new CertificateTemplateAccessRuleException(this, ex);
