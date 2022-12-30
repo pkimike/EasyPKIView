@@ -261,7 +261,7 @@ namespace EasyPKIView.CertificateTemplates {
             };
         }
         void setEnhancedKeyUsageExtension() {
-            Object[] ekus = (Object[])DirEntry.Properties[DsPropertyName.EKU]?.Value;
+            List<String> ekus = GetMultiStringAttribute(DsPropertyName.EKU);
             if (ekus is null) {
                 return;
             }
@@ -269,8 +269,7 @@ namespace EasyPKIView.CertificateTemplates {
             var ekuFlags = EnhancedKeyUsageFlags.None;
             var customEkus = new List<String>();
 
-            foreach (Object eku in ekus) {
-                var oid = (String)eku;
+            foreach (String oid in ekus) {
                 if (_enhancedKeyUsageMap.ContainsKey(oid)) {
                     ekuFlags |= _enhancedKeyUsageMap[oid];
                 } else {
